@@ -1,7 +1,13 @@
-import content from "../content/md/index.md";
+import Head from "next/head.js";
+import content from "../content/md/home.md";
 
 export default function Index() {
 	return (
-		<div dangerouslySetInnerHTML={{__html: content.html}}/>
+		<div>
+			<Head>
+				<title>{content.attributes.title}</title>
+			</Head>
+			<div dangerouslySetInnerHTML={{__html: content.html}}/>
+		</div>
 	);
 }

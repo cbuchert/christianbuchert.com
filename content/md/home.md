@@ -1,6 +1,6 @@
 ---
 {
-    description: "Christian Buchert - Acolyte of Internets",
+    title: "Christian Buchert - Acolyte of Internets",
 }
 ---
 # Chris Buchert
