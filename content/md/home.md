@@ -1,7 +1,6 @@
 ---
-{
-    title: "Christian Buchert - Acolyte of Internets",
-}
+title: "Christian Buchert - Acolyte of Internets"
+description: "The personal page of Christian Buchert"
 ---
 # Chris Buchert
 
