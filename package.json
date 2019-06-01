@@ -1,0 +1,33 @@
+{
+ "name": "christianbuchert.com",
+ "version": "1.0.0",
+ "description": "My personal website",
+ "main": "index.js",
+ "scripts": {
+  "test": "jest",
+  "dev": "next",
+  "build": "next build",
+  "start": "next start",
+  "export": "npm run build && next export"
+ },
+ "repository": {
+  "type": "git",
+  "url": "git+https://github.com/cbuchert/christianbuchert.com.git"
+ },
+ "keywords": [],
+ "author": "Chris Buchert",
+ "license": "CC BY-SA 4.0",
+ "bugs": {
+  "url": "https://github.com/cbuchert/christianbuchert.com/issues"
+ },
+ "homepage": "https://github.com/cbuchert/christianbuchert.com#readme",
+ "dependencies": {
+  "next": "^8.1.0",
+  "react": "^16.8.6",
+  "react-dom": "^16.8.6"
+ },
+ "devDependencies": {
+  "frontmatter-markdown-loader": "^1.6.0",
+  "jest": "^24.8.0"
+ }
+}
