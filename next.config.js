@@ -7,5 +7,11 @@ module.exports = {
 			}
 		);
 		return config;
-	}
+	},
+	exportPathMap: () => {
+		return {
+			"/": {page: "/"},
+			"/blog": {page: "/blog"},
+		};
+	},
 };
