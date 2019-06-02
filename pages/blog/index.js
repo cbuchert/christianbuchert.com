@@ -1,5 +1,5 @@
-import ToCItemModel from "../models/ToC/ToCItemModel.js";
-import ToCItem from "../components/ToC/ToCItem.js";
+import ToCItemModel from "../../models/ToC/ToCItemModel.js";
+import ToCItem from "../../components/ToC/ToCItem.js";
 
 export default class extends React.Component {
 	static async getInitialProps() {
@@ -15,7 +15,7 @@ export default class extends React.Component {
 			});
 
 			return data;
-		})(require.context("../content/md/blog", false, /\.md$/));
+		})(require.context("../../content/md/blog", false, /\.md$/));
 
 		return {posts};
 	}
@@ -24,7 +24,7 @@ export default class extends React.Component {
 		return (
 			<div>
 				<h1>Posts</h1>
-				{this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog" key={post.title}/>)}
+				{this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog/post" key={post.title}/>)}
 			</div>
 		);
 	}
