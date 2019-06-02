@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
-export default function ToCItem(props) {
+export default function ToCItem({pathname, linkModel}) {
 	return (
-		<Link as={`${props.pathname}/${props.linkModel.url}`} href={{pathname: props.pathname, query: {id: props.linkModel.url}}}>
-			<a>{props.linkModel.title}</a>
+		<Link as={`${pathname}/${linkModel.url}`} href={{pathname: `${pathname}`, query: {id: linkModel.url}}}>
+			<a>{linkModel.title}</a>
 		</Link>
 	);
 }
