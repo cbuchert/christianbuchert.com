@@ -10,7 +10,7 @@ export default class Index extends Component {
 
 	render() {
 		return (
-			<main>
+			<div>
 				<Head>
 					<title>{this.props.attributes.title}</title>
 				</Head>
@@ -20,7 +20,7 @@ export default class Index extends Component {
 				<Link href='/'>
 					<a>Go back to home</a>
 				</Link>
-			</main>
+			</div>
 		)
 	}
 }
