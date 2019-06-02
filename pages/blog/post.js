@@ -5,7 +5,8 @@ import Head from 'next/head.js'
 export default class Index extends Component {
 	static async getInitialProps({query}) {
 		const post = await import(`../../content/md/blog/${query.id}.md`);
-		return {...post};
+
+		return {...post.default};
 	}
 
 	render() {
@@ -17,7 +18,7 @@ export default class Index extends Component {
 
 				<h1>{this.props.attributes.title}</h1>
 				<div dangerouslySetInnerHTML={{__html: this.props.body}}/>
-				<Link href='/'>
+				<Link href="/">
 					<a>Go back to home</a>
 				</Link>
 			</div>
