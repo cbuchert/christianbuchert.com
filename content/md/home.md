@@ -5,4 +5,4 @@ date: 2019-06-03T17:52:04.514Z
 ---
 # Chris Buchert
 
-What's this? Flavor text?
+Flavor of the week? New.
