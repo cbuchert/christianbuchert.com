@@ -18,7 +18,7 @@ export default function Index({links}) {
     const subHeadingStyles = {
         color: "#555",
         fontFamily: "Open Sans Condensed, Arial, sans-serif",
-        margin: "0",
+        margin: "0 0 0 3px",
     };
     const bodyStyles = {
         fontFamily: "Open Sans, Arial, sans-serif",
