@@ -4,8 +4,9 @@ import NavLinks from "../components/NavLinks";
 
 export default function Index({links}) {
     const containerStyles = {
-      maxWidth: "786px",
-      margin: "120px auto 0",
+        maxWidth: "786px",
+        margin: "0 auto",
+        padding: "120px 10px 0",
     };
     const headingStyles = {
         color: "#FBAE41",
@@ -36,6 +37,20 @@ export default function Index({links}) {
                     href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Open+Sans+Condensed:300&display=swap"
                     rel="stylesheet"
                 />
+                <style>{`
+                    html,
+                    body {
+                        height: 100%;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    // body { 
+                    //     background-image: url(/static/img/chris-glyph.svg);
+                    //     background-repeat: no-repeat;
+                    //     background-position: 50% 100%;
+                    //     background-size: 300px auto;
+                    // }
+                `}</style>
             </Head>
             <h1 style={headingStyles}>{content.attributes.heading}</h1>
             <h2 style={subHeadingStyles}>{content.attributes.subHeading}</h2>
