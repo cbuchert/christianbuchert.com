@@ -3,6 +3,10 @@ import content from "../content/md/home.md";
 import NavLinks from "../components/NavLinks";
 
 export default function Index({links}) {
+    const containerStyles = {
+      maxWidth: "786px",
+      margin: "120px auto 0",
+    };
     const headingStyles = {
         color: "#FBAE41",
         fontFamily: "Montserrat, Arial, sans-serif",
@@ -19,10 +23,11 @@ export default function Index({links}) {
     const bodyStyles = {
         fontFamily: "Open Sans, Arial, sans-serif",
         color: "#666",
+        margin: "40px 0",
     };
 
     return (
-        <div>
+        <div style={containerStyles}>
             <Head>
                 <title>{content.attributes.title}</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
