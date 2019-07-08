@@ -1,5 +1,5 @@
 ---
-title: YouTube - Drafthouse
+title: CAD Tutorials I Made
 imageSrc: /static/img/youtube.svg
 imageAlt: My CAD Tutorial YouTube Channel
 url: https://youtube.com/drafthouse-cad
