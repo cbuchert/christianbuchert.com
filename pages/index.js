@@ -1,6 +1,7 @@
 import Head from "next/head.js";
 import content from "../content/md/home.md";
 import NavLinks from "../components/NavLinks";
+import funConsoleMessage from "../util/funConsoleMessage";
 
 export default function Index({links}) {
     const containerStyles = {
@@ -26,6 +27,8 @@ export default function Index({links}) {
         color: "#666",
         margin: "40px 0 80px",
     };
+
+    funConsoleMessage();
 
     return (
         <div style={containerStyles}>
