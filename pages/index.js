@@ -23,13 +23,12 @@ Index.getInitialProps = async () => {
 		const keys = context.keys();
 		const values = keys.map(context);
 
-		const data = keys.map((key, i) => {
+		return keys.map((key, i) => {
 			const value = values[i];
 
 			return value.attributes;
 		});
 
-		return data;
 	})(require.context("../content/md/home/links", false, /\.md$/));
 
 	return {links};

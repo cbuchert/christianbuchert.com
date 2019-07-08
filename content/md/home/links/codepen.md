@@ -1,6 +1,6 @@
 ---
 title: CodePen
-imageSrc: none.svg
+imageSrc: /static/img/codepen.svg
 imageAlt: CodePen
 url: https://codepen.io/cbuchert
 target: _blank
