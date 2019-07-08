@@ -1,8 +1,14 @@
 import NavLink from "./NavLink";
 
 export default function NavLinks({links}) {
+    const navLinkContainerStyles = {
+        display: "flex",
+        justifyContent: "space-between",
+        flexWrap: "wrap",
+    };
+
     return (
-        <div>
+        <div style={navLinkContainerStyles}>
             {links.map(link => {
                 return <NavLink
                     key={link.title}

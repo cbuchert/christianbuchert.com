@@ -17,14 +17,14 @@ export default function Index({links}) {
         margin: "0",
     };
     const subHeadingStyles = {
-        color: "#555",
+        color: "#999",
         fontFamily: "Open Sans Condensed, Arial, sans-serif",
         margin: "0 0 0 3px",
     };
     const bodyStyles = {
         fontFamily: "Open Sans, Arial, sans-serif",
         color: "#666",
-        margin: "40px 0",
+        margin: "40px 0 80px",
     };
 
     return (
@@ -44,12 +44,9 @@ export default function Index({links}) {
                         margin: 0;
                         padding: 0;
                     }
-                    // body { 
-                    //     background-image: url(/static/img/chris-glyph.svg);
-                    //     background-repeat: no-repeat;
-                    //     background-position: 50% 100%;
-                    //     background-size: 300px auto;
-                    // }
+                    body {
+                        background-color: #fefefe; 
+                    }
                 `}</style>
             </Head>
             <h1 style={headingStyles}>{content.attributes.heading}</h1>
