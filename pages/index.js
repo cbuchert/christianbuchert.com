@@ -40,6 +40,7 @@ export default function Index({links}) {
                     href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Open+Sans+Condensed:300&display=swap"
                     rel="stylesheet"
                 />
+                <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
                 <style>{`
                     html,
                     body {
