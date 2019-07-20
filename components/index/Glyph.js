@@ -9,7 +9,7 @@ export default function Glyph(props) {
                     id={"chris-glyph"}
                     height={"100%"}
                     width={"100%"}
-                    viewBox={"0 0 800 800"}
+                    viewBox={"-200 -200 1000 1000"}
                 />
             </div>
             <style jsx>{`
