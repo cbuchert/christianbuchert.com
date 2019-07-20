@@ -35,14 +35,14 @@ export default function IndexCopy({heading, subHeading, bodyHtml, links}) {
                 }
                 
                 .sub-heading {
-                  color: #EFEFEF;
+                  color: #FAE9D2;
                   font-family: Open Sans Condensed, Arial, sans-serif;
                   margin: 0 0 0 3px;
                 }
                 
                 .body {
                   font-family: Open Sans, Arial, sans-serif;
-                  color: #666;
+                  color: #FCECD4;
                   margin: 40px 0 80px;
                 }
             `}</style>
