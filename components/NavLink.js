@@ -5,6 +5,7 @@ export default function ({title, imageSrc, imageAlt, url, target}) {
         fontFamily: "Open Sans, Arial, sans-serif",
         display: "flex",
         alignItems: "center",
+        color: "#FCECD4",
     };
     const imageStyles = {
         height: "20px",
@@ -12,15 +13,17 @@ export default function ({title, imageSrc, imageAlt, url, target}) {
     };
 
     return (
-        <Link href={url}>
-            <a target={target} style={linkStyles}>
-                <img
-                    src={imageSrc}
-                    alt={imageAlt}
-                    style={imageStyles}
-                />
-                {title}
-            </a>
-        </Link>
+        <>
+            <Link href={url}>
+                <a target={target} style={linkStyles}>
+                    <img
+                        src={imageSrc}
+                        alt={imageAlt}
+                        style={imageStyles}
+                    />
+                    {title}
+                </a>
+            </Link>
+        </>
     );
 }
