@@ -1,7 +1,8 @@
 import Head from "next/head.js";
 import content from "../content/md/home.md";
 import funConsoleMessage from "../util/funConsoleMessage";
-import IndexCopy from "../components/IndexCopy";
+import IndexCopy from "../components/index/IndexCopy";
+import Glyph from "../components/index/Glyph";
 
 export default function Index({links}) {
     funConsoleMessage();
@@ -13,7 +14,7 @@ export default function Index({links}) {
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
                 <meta name="description" content={content.attributes.description}/>
                 <link
-                    href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Open+Sans+Condensed:300&display=swap"
+                    href="https://fonts.googleapis.com/css?family=Montserrat:700|Open+Sans|Open+Sans+Condensed:300&display=swap"
                     rel="stylesheet"
                 />
                 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
@@ -26,11 +27,8 @@ export default function Index({links}) {
                     }
                     
                     body {
-                        background-color: #fefefe; 
-                    }
-                    
-                    #__next {
-                        min-height: 100%;
+                        background-color: #fefefe;
+                        display: flex;
                     }
                 `}</style>
             </Head>
@@ -39,12 +37,11 @@ export default function Index({links}) {
                 bodyHtml={content.html}
                 links={links}
             />
-            <div>
-            </div>
+            <Glyph/>
             <style jsx>{`
                 .layout {
                     display: grid;
-                    grid-template-columns: [copy] 1fr [glyph] 1fr [end];
+                    grid-template-columns: 1fr 1fr;
                     height: 100%;
                 }
             `}</style>
