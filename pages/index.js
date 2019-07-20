@@ -7,7 +7,7 @@ export default function Index({links}) {
     funConsoleMessage();
 
     return (
-        <div className={"container"}>
+        <div className={"layout"}>
             <Head>
                 <title>{content.attributes.title}</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
@@ -17,6 +17,22 @@ export default function Index({links}) {
                     rel="stylesheet"
                 />
                 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+                <style>{`
+                    html,
+                    body {
+                        height: 100%;
+                        margin: 0;
+                        padding: 0;
+                    }
+                    
+                    body {
+                        background-color: #fefefe; 
+                    }
+                    
+                    #__next {
+                        min-height: 100%;
+                    }
+                `}</style>
             </Head>
             <IndexCopy
                 {...content.attributes}
@@ -26,21 +42,10 @@ export default function Index({links}) {
             <div>
             </div>
             <style jsx>{`
-                html,
-                body {
+                .layout {
+                    display: grid;
+                    grid-template-columns: [copy] 1fr [glyph] 1fr [end];
                     height: 100%;
-                    margin: 0;
-                    padding: 0;
-                }
-                
-                body {
-                    background-color: #fefefe; 
-                }
-
-                .container {
-                  max-width: 786px;
-                  margin: 0 auto;
-                  padding: 120px 10px 0;
                 }
             `}</style>
         </div>
