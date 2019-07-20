@@ -4,34 +4,10 @@ import NavLinks from "../components/NavLinks";
 import funConsoleMessage from "../util/funConsoleMessage";
 
 export default function Index({links}) {
-    const containerStyles = {
-        maxWidth: "786px",
-        margin: "0 auto",
-        padding: "120px 10px 0",
-    };
-    const headingStyles = {
-        color: "#FBAE41",
-        fontFamily: "Montserrat, Arial, sans-serif",
-        fontWeight: "bold",
-        textTransform: "uppercase",
-        fontSize: "40px",
-        margin: "0",
-    };
-    const subHeadingStyles = {
-        color: "#999",
-        fontFamily: "Open Sans Condensed, Arial, sans-serif",
-        margin: "0 0 0 3px",
-    };
-    const bodyStyles = {
-        fontFamily: "Open Sans, Arial, sans-serif",
-        color: "#666",
-        margin: "40px 0 80px",
-    };
-
     funConsoleMessage();
 
     return (
-        <div style={containerStyles}>
+        <div className={"container"}>
             <Head>
                 <title>{content.attributes.title}</title>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
@@ -41,22 +17,50 @@ export default function Index({links}) {
                     rel="stylesheet"
                 />
                 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
-                <style>{`
-                    html,
-                    body {
-                        height: 100%;
-                        margin: 0;
-                        padding: 0;
-                    }
-                    body {
-                        background-color: #fefefe; 
-                    }
-                `}</style>
             </Head>
-            <h1 style={headingStyles}>{content.attributes.heading}</h1>
-            <h2 style={subHeadingStyles}>{content.attributes.subHeading}</h2>
-            <div style={bodyStyles} dangerouslySetInnerHTML={{__html: content.html}}/>
+            <h1 className={"heading"}>{content.attributes.heading}</h1>
+            <h2 className={"sub-heading"}>{content.attributes.subHeading}</h2>
+            <div className={"body"} dangerouslySetInnerHTML={{__html: content.html}}/>
             <NavLinks links={links}/>
+            <style jsx>{`
+                html,
+                body {
+                    height: 100%;
+                    margin: 0;
+                    padding: 0;
+                }
+                
+                body {
+                    background-color: #fefefe; 
+                }
+
+                .container {
+                  max-width: 786px;
+                  margin: 0 auto;
+                  padding: 120px 10px 0;
+                }
+                
+                .heading {
+                  color: #FBAE41;
+                  font-family: Montserrat, Arial, sans-serif;
+                  font-weight: bold;
+                  text-transform: uppercase;
+                  font-size: 40px;
+                  margin: 0;
+                }
+                
+                .sub-heading {
+                  color: #999;
+                  font-family: Open Sans Condensed, Arial, sans-serif;
+                  margin: 0 0 0 3px;
+                }
+                
+                .body {
+                  font-family: Open Sans, Arial, sans-serif;
+                  color: #666;
+                  margin: 40px 0 80px;
+                }
+            `}</style>
         </div>
     );
 }
