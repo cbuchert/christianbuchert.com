@@ -1,7 +1,7 @@
 import Head from "next/head.js";
 import content from "../content/md/home.md";
-import NavLinks from "../components/NavLinks";
 import funConsoleMessage from "../util/funConsoleMessage";
+import IndexCopy from "../components/IndexCopy";
 
 export default function Index({links}) {
     funConsoleMessage();
@@ -18,10 +18,13 @@ export default function Index({links}) {
                 />
                 <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
             </Head>
-            <h1 className={"heading"}>{content.attributes.heading}</h1>
-            <h2 className={"sub-heading"}>{content.attributes.subHeading}</h2>
-            <div className={"body"} dangerouslySetInnerHTML={{__html: content.html}}/>
-            <NavLinks links={links}/>
+            <IndexCopy
+                {...content.attributes}
+                bodyHtml={content.html}
+                links={links}
+            />
+            <div>
+            </div>
             <style jsx>{`
                 html,
                 body {
@@ -38,27 +41,6 @@ export default function Index({links}) {
                   max-width: 786px;
                   margin: 0 auto;
                   padding: 120px 10px 0;
-                }
-                
-                .heading {
-                  color: #FBAE41;
-                  font-family: Montserrat, Arial, sans-serif;
-                  font-weight: bold;
-                  text-transform: uppercase;
-                  font-size: 40px;
-                  margin: 0;
-                }
-                
-                .sub-heading {
-                  color: #999;
-                  font-family: Open Sans Condensed, Arial, sans-serif;
-                  margin: 0 0 0 3px;
-                }
-                
-                .body {
-                  font-family: Open Sans, Arial, sans-serif;
-                  color: #666;
-                  margin: 40px 0 80px;
                 }
             `}</style>
         </div>
