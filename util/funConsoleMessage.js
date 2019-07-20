@@ -11,7 +11,7 @@ if (typeof window !== "undefined") {
 Hey hey, you found me. As you can see, I'm still fleshing this out. While you're
 waiting and I'm devving, here's some art for your troubles. :)
             `);
-            explodeGlyph(200, 500);
+            explodeGlyph(200, 333);
         },
     };
 }
