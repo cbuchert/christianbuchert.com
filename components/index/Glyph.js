@@ -1,7 +1,7 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import ChrisGlyph from "../../static/img/chris-glyph.svg";
 
-export default function Glyph(props) {
+export default function Glyph() {
     return (
         <>
             <div className={"glyph--container"}>
