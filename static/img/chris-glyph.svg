@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="612" height="610.311">
+<svg xmlns="http://www.w3.org/2000/svg" width="612" height="610.311" id="chris-glyph">
     <style>
         .chris-glyph--shadows {
             fill: #FBAE42;
@@ -10,6 +10,20 @@
         
         .chris-glyph--highlights {
             fill: #FFF;
+        }
+        .chris-glyph--shadows-transparent {
+            fill: #FBAE42;
+            fill-opacity: .65;
+        }
+
+        .chris-glyph--midtones-transparent {
+            fill: #F8D8B2;
+            fill-opacity: .65;
+        }
+
+        .chris-glyph--highlights-transparent {
+            fill: #FFF;
+            fill-opacity: .65;
         }
     </style>
     <g id="chris-glyph--core">
@@ -47,11 +61,11 @@
         <path class="chris-glyph--midtones"
               d="M92.728 364.045l37.091-21.414 18.545 10.707-18.545 10.707 18.545 10.707-18.545 10.707-37.091-21.414M185.455 460.41L204 449.703l-18.545-10.707v21.414"/>
         <path class="chris-glyph--shadows" d="M148.364 374.752l-18.545-10.707 18.545-10.707v21.414"/>
-        <path class="chris-glyph--midtones"
+        <path class="chris-glyph--midtones-transparent"
               d="M259.637 139.194L204 171.315v21.415l-18.545 10.707L204 214.145v21.414l-18.545 10.707 55.636 32.122 37.091-21.415 37.091 21.415 37.091-21.415 37.091 21.415 55.636-32.122-18.546-10.707v-21.414l18.546-10.708-18.546-10.707v-21.415l-55.636-32.121-18.545 10.707-37.091-21.414-37.091 21.414-18.545-10.707"/>
-        <path class="chris-glyph--highlights"
+        <path class="chris-glyph--highlights-transparent"
               d="M185.455 460.41l55.636 32.121 18.546-10.707 18.545 10.707v-21.414l18.545-10.707 18.546 10.707v-64.242l-37.091-21.416v-42.828l-37.091-21.414v-42.829l-55.636-32.122v21.415l-18.546 10.707-18.545-10.707v21.414l-18.545 10.707v64.243l18.545 10.707v42.83l37.091 21.414v21.414"/>
-        <path class="chris-glyph--shadows"
+        <path class="chris-glyph--shadows-transparent"
               d="M500.727 364.045v-64.243l-18.545-10.707v-21.414l-18.546 10.707-18.545-10.707v-21.415l-55.636 32.122v42.829l-37.091 21.414v42.828l-37.091 21.416v64.242l18.545-10.707 18.546 10.707v21.414l18.545-10.707 18.546 10.707 55.636-32.121v-21.414l37.091-21.414v-42.83l18.545-10.707"/>
     </g>
     <g id="chris-glyph--right">
