@@ -1,6 +1,17 @@
 export default function () {
-    console.log(`Looking for the good stuff, n'est-ce pas?`);
-    console.log(asciiArt);
+    console.log(`Looking for the good stuff? Check out window.ChrisBuchert`);
+}
+
+if (typeof window !== "undefined") {
+    window.ChrisBuchert = {
+        getStarted: () => {
+            console.log(`
+Hey hey, you found me. As you can see, I'm still fleshing this out. While you're
+waiting and I'm devving, here's some art for your troubles. :)
+            `);
+            console.log(asciiArt);
+        },
+    };
 }
 
 const asciiArt = `                                                                                
