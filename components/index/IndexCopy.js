@@ -1,17 +1,17 @@
 import NavLinks from "../NavLinks";
 
-export default function IndexCopy({heading, subHeading, bodyHtml, links}) {
-    return (
-        <>
-            <div className={"content"}>
-                <div className={"content--container"}>
-                    <h1 className={"heading"}>{heading}</h1>
-                    <h2 className={"sub-heading"}>{subHeading}</h2>
-                    <div className={"body"} dangerouslySetInnerHTML={{__html: bodyHtml}}/>
-                    <NavLinks links={links}/>
-                </div>
-            </div>
-            <style jsx>{`
+export default function IndexCopy({ heading, subHeading, bodyHtml, links }) {
+  return (
+    <>
+      <div className={"content"}>
+        <div className={"content--container"}>
+          <h1 className={"heading"}>{heading}</h1>
+          <h2 className={"sub-heading"}>{subHeading}</h2>
+          <div className={"body"} dangerouslySetInnerHTML={{ __html: bodyHtml }}/>
+          <NavLinks links={links}/>
+        </div>
+      </div>
+      <style jsx>{`
                 .content {
                     background-color: #FBAE41;
                     display: flex;
@@ -46,6 +46,6 @@ export default function IndexCopy({heading, subHeading, bodyHtml, links}) {
                   margin: 40px 0 80px;
                 }
             `}</style>
-        </>
-    );
+    </>
+  );
 }
