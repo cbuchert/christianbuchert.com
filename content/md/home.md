@@ -9,4 +9,4 @@ Hey. I'm Chris. I'm a web developer in Utah Valley who doesn't spend much time o
 
 I'm a React and NextJs junkie. Message me on LinkedIn. Let's meet up and do lunch.
 
-Changes.
+So many changes!
