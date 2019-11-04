@@ -23,7 +23,7 @@
  "homepage": "https://github.com/cbuchert/christianbuchert.com#readme",
  "dependencies": {
   "express": "^4.17.1",
-  "next": "^8.1.0",
+  "next": "^9.1.2",
   "popmotion": "^8.7.0",
   "react": "^16.8.6",
   "react-dom": "^16.8.6"
