@@ -10,18 +10,18 @@ collections:
         name: "home"
         file: "content/md/home.md"
         fields:
-          - { label: "Title", name: "title", widget: "string"}
-          - { label: "Description", name: "description", widget: "string"}
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string" }
           - { label: "Publish Date", name: "date", widget: "datetime" }
-          - { label: "Heading", name: "heading", widget: "string"}
-          - { label: "Sub-Heading", name: "subHeading", widget: "string"}
-          - { label: "Body", name: "body", widget: "markdown"}
-#  - name: "blog"
-#    label: "Blog"
-#    folder: "content/md/blog"
-#      create: true
-#      fields:
-#        - { label: "Title" name: "title", widget: "string"}
-#        - { label: "Publish Date", name: "date", widget: "datetime" }
-#        - { label: "Description", name: "description", widget: "string"}
-#        - { label: "Body", name: "body", widget: "markdown"}
+          - { label: "Heading", name: "heading", widget: "string" }
+          - { label: "Sub-Heading", name: "subHeading", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown" }
+  - name: "blog"
+    label: "Blog"
+    folder: "content/md/blog"
+    create: true
+    fields:
+      - { label: "Publish Date", name: "date", widget: "datetime" }
+      - { label: "Title", name: "title", widget: "string"}
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
