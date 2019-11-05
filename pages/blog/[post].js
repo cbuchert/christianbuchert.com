@@ -2,9 +2,10 @@ import { Component } from "react";
 import Link from "next/link.js";
 import Head from "next/head.js";
 
-export default class Index extends Component {
+export default class Post extends Component {
   static async getInitialProps({ query }) {
-    const post = await import(`../../content/md/blog/${query.id}.md`);
+    console.log(query);
+    const post = await import(`../../content/md/blog/${query.post}.md`);
 
     return { ...post.default };
   }

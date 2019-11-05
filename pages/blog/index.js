@@ -5,8 +5,9 @@ export default class extends React.Component {
   static async getInitialProps() {
     const posts = (context => {
       const keys = context.keys();
-      const values = keys.map(context); // What is this actually doing?
+      const values = keys.map(context);
 
+      //TODO: Sort posts by date, descending.
       const data = keys.map((key, i) => {
         const value = values[ i ];
         const url = key.replace(/^.*[\\\/]/, "").split(".").slice(0, -1).join(".");
@@ -24,7 +25,7 @@ export default class extends React.Component {
     return (
       <div>
         <h1>Posts</h1>
-        {this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog/post" key={post.title}/>)}
+        {this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog" key={post.title}/>)}
       </div>
     );
   }
