@@ -1,4 +1,3 @@
-import ToCItemModel from "../../models/ToC/ToCItemModel.js";
 import ToCItem from "../../components/ToC/ToCItem.js";
 
 export default class extends React.Component {
@@ -12,8 +11,15 @@ export default class extends React.Component {
         const value = values[ i ];
         const url = key.replace(/^.*[\\\/]/, "").split(".").slice(0, -1).join(".");
 
-        return new ToCItemModel(value.attributes.title, value.attributes.description, url);
+        return {
+          title: value.attributes.title,
+          description: value.attributes.description,
+          date: new Date(value.attributes.date),
+          url,
+        };
       });
+
+      data.sort((a, b) => a.date <= b.date ? 1 : -1);
 
       return data;
     })(require.context("../../content/md/blog", false, /\.md$/));
@@ -25,7 +31,9 @@ export default class extends React.Component {
     return (
       <div>
         <h1>Posts</h1>
-        {this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog" key={post.title}/>)}
+        <ul>
+          {this.props.posts.map(post => <ToCItem linkModel={post} pathname="/blog" key={post.title}/>)}
+        </ul>
       </div>
     );
   }
