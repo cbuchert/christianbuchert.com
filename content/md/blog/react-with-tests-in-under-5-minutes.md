@@ -3,13 +3,33 @@ date: 2019-11-06T23:25:01.872Z
 title: React With Tests in Under 5 Minutes
 description: How I get up and devving as quickly as possible.
 ---
-// TODO: Add list of working assumptions.
+## Working assumptions
+- You can get around a terminal environment (`cd`, `mkdir`, etc).
+- You have `git`, `node`, and `npm` installed.
+- You can edit text files.
+
+## TL;DR
+- Make a folder.
+- Initialize `git` and `npm`.
+- Add and populate `.gitignore`.
+- Install `parcel-bundler`, `babel`, `jest`, `react-testing-library`, and `react`.
+- Create and populate `babel.config.js`.
+- Update `packge.json` scripts.
+- Stub out your application entry point.
+- Create a HTML file for Parcel to bind to.
+- Sanity check your setup.
+- Stub out your React application.
+- Profit.
+
+[Reference Repository](https://github.com/cbuchert/react-from-scratch-in-5-minutes)
+
+// TODO: Write a better hook in the intro.
 
 Here's how I get a React project up to dev on, on the quick.
 
-## Newing up a project
+## Newing up the project
 
-Let's start by creating a new folder for the project. Let's call our project `new-project`. Newing up a home for it starts by opening up the terminal and navigating to the location wherein you'd like to store your project. You can create your the husk of your new project with the following commands:
+Let's start by creating a new folder for the project. Let's call our project `new-project`. Newing up a home for our new project starts by opening up the terminal and navigating to the location wherein you'd like to store your project. You can create your the husk of your new project with the following commands:
 
 ```
 mkdir new-project
