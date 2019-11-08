@@ -23,6 +23,7 @@ collections:
     create: true
     fields:
       - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Title", name: "title", widget: "string"}
       - { label: "Description", name: "description", widget: "string" }
+      - { label: "Keywords", name: "keywords", widget: "list" }
+      - { label: "Title", name: "title", widget: "string"}
       - { label: "Body", name: "body", widget: "markdown" }
