@@ -23,8 +23,6 @@ description: How I get up and devving as quickly as possible.
 
 [Reference Repository](https://github.com/cbuchert/react-from-scratch-in-5-minutes)
 
-// TODO: Write a better hook in the intro.
-
 Here's how I get a React project up to dev on, on the quick.
 
 ## Newing up the project
