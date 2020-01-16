@@ -1,5 +1,5 @@
 ---
-date: 2019-11-06T23:25:01.872Z
+date: 2020-01-16T23:15:01.872Z
 title: React With Tests in Under 5 Minutes
 description: How I get up and devving as quickly as possible.
 ---
@@ -22,8 +22,6 @@ description: How I get up and devving as quickly as possible.
 - Profit.
 
 [Reference Repository](https://github.com/cbuchert/react-from-scratch-in-5-minutes)
-
-// TODO: Write a better hook in the intro.
 
 Here's how I get a React project up to dev on, on the quick.
 
