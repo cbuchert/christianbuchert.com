@@ -6,6 +6,7 @@ export default class Post extends Component {
   static async getInitialProps({ query }) {
     console.log(query);
     const post = await import(`../../content/md/blog/${query.post}.md`);
+    console.log(post);
 
     return { ...post.default, filename: query.post };
   }
@@ -31,7 +32,7 @@ export default class Post extends Component {
         </Head>
 
         <h1>{this.props.attributes.title}</h1>
-        <div dangerouslySetInnerHTML={{ __html: this.props.body }}/>
+        <div dangerouslySetInnerHTML={{ __html: this.props.html }}/>
         <Link href="/">
           <a>Go back to home</a>
         </Link>
