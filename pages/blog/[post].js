@@ -4,9 +4,7 @@ import Head from "next/head.js";
 
 export default class Post extends Component {
   static async getInitialProps({ query }) {
-    console.log(query);
     const post = await import(`../../content/md/blog/${query.post}.md`);
-    console.log(post);
 
     return { ...post.default, filename: query.post };
   }
