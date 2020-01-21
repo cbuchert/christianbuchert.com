@@ -11,7 +11,7 @@ title: 'JavaScript Performance:  Class Data Structures vs. Objects'
 
 In July and August of 2019, I did a round of interviews and changed companies. During one of the interviews, I wrote some code that looked something like this:
 
-```
+```javascript
 class User {
   constructor(name, age, sex, location) {
     this.name = name;
@@ -36,14 +36,14 @@ One of my interviewers engaged on this, asserting that I was working on some bad
 
 So, what gives? Is a class really a performance hole when used as a glorified hashmap? Let's find out. First, a couple of givens.
 
-1. Yes, classes and inheritance in ECMA Script don't work like other OO languages, yes, ECMA Script uses prototypal inheritance, yes you're probably right that I'm probably wrong, yes let's suspend your judgement for the sake of discovery.
-1. Use cases vary wildly. Simple benchmarking like what I'm doing here might not be representative of your implementation.
+1. Yes, classes and inheritance in ECMA Script don't work like other OO languages, yes, ECMA Script uses prototypal inheritance.
+2. Use cases vary wildly. Simple benchmarking like what I'm doing here might not be representative of your implementation.
 
 The good news (at least with the last point) is that this is easy to reproduce and adapt. Moving forward.
 
 Let's make really big arrays of two data structures: one made with a plain old object and one made with a class, like so:
 
-```
+```javascript
 function buildArray(callback) {
   const array = [];
   
@@ -67,3 +67,16 @@ class ClassTest {
 const objectArray = buildArray(buildObject);
 const classArray = buildArray(i => new ClassTest(i));
 ```
+
+Alright. Profiler time. How do the two methods stack up?
+
+![Profile of array of 1,000,000 hashmap objects](/static/img/object_vs_class_as_hashmap_-_object_array.png "1,000,000 hashmap object array")
+
+![Profile of array of 1,000,000 hashmap class instances](/static/img/object_vs_class_as_hashmap_-_class_instance_array.png "1,000,000 hashmap class instance array")
+
+So, what are we seeing here?
+
+1. Using a class is actually faster over the course of building a 1,000,000 element array.
+1. The garbage collector starts working earlier and works more sparsely when making an array of hashmap objects.
+1. The interpreter does a round of dedicated cleanup after building the class instance array.
+1. 
