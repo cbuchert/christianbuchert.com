@@ -37,7 +37,9 @@ One of my interviewers engaged on this, asserting that I was working on some bad
 So, what gives? Is a class really a performance hole when used as a glorified hashmap? Let's find out. First, a couple of givens.
 
 1. Yes, classes and inheritance in ECMA Script don't work like other OO languages, yes, ECMA Script uses prototypal inheritance.
-2. Use cases vary wildly. Simple benchmarking like what I'm doing here might not be representative of your implementation.
+1. Use cases vary wildly. Simple benchmarking like what I'm doing here might not be representative of your implementation.
+1. I'm testing one-offs in the developer console in Brave `1.2.42`.
+1. This is not a deep dive into JavaScript execution in all environments. If you really wanted to thoroughly benchmark something like this, you'd probably build a testing framework and replicate the test thousands of times in all the major JavaScript environments (a bunch of browsers, Node, maybe Deno if you're feeling frisky) and get your data that way. While this would be interesting, it is outside of the scope of what I was trying to do, which is mostly satisfying my curiosity after what felt like a rough interview.
 
 The good news (at least with the last point) is that this is easy to reproduce and adapt. Moving forward.
 
@@ -77,6 +79,39 @@ Alright. Profiler time. How do the two methods stack up?
 So, what are we seeing here?
 
 1. Using a class is actually faster over the course of building a 1,000,000 element array.
-1. The garbage collector starts working earlier and works more sparsely when making an array of hashmap objects.
-1. The interpreter does a round of dedicated cleanup after building the class instance array.
-1. 
+2. The garbage collector starts working earlier and works more sparsely when making an array of hashmap objects.
+3. The interpreter does a round of dedicated cleanup after building the class instance array.
+
+Let's look at memory usage. Generating an array of hashmap objects takes us from an ambient 4.9 MB on the JS heap to 57.1 MB. Quick note: that's almost the total amount of RAM I had in my second desktop machine (64 MB was respectable in 1997). Generating an array of class instances takes from an ambient 5.0 MB on the JS heap to 59.3 MB. Here are all the numbers again.
+
+<table>
+  <thead>
+  <tr>
+    <td>Array Type</td>
+    <td>Execution Time (ms)</td>
+    <td>Heap Start (MB)</td>
+    <td>Heap End (MB)</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Object Hashmap</td>
+    <td>297</td>
+    <td>4.9</td>
+    <td>57.1</td>
+  </tr>
+  <tr>
+    <td>Class Instance</td>
+    <td>221</td>
+    <td>5.0</td>
+    <td>59.3</td>
+  </tr>
+  </tbody>
+</table>
+
+## Takeaways
+
+So, what do we learn from this? With a sampling of 1 (not entirely true; I've run this a few times with similar results in Chromium-based browsers, but still not enough time to be qualify as rigorous testing and to earn the badge of statistical significance). Here we go.
+
+1. As always, computing is a tradeoff between CPU time and memory usage. Class instances, in my use case, executed faster but took more memory.
+1. Before hard committing to using classes as a data structure, it's good to think about development costs in maintenance for any approach you take. If you're this committed to using more formal data structures than plain old JavaScript objects maybe it's time to look at TypeScript.
