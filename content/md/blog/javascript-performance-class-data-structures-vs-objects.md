@@ -28,7 +28,7 @@ const user2 = new User("Bilbo Baggins", 106, "m", "Middle Earth");
 My thinking was two fold
 
 1. I want to create a data structure that has a consistent contract that I can rely on in future code.
-2. Keys in an object are separate strings for every string, while fields on a class are stored on the prototype. This means there is potential for a memory performance advantage when using class fields as more strictly-typed key-value data structures.
+2. Keys in an object are separate strings for every key, while fields on a class are stored on the prototype. This means there is potential for a memory performance advantage when using class fields as more strictly-typed key-value data structures.
 
 One of my interviewers engaged on this, asserting that I was working on some bad assumptions. Specifically, any reduction in memory that I might obtain was eaten up in the overhead of using a heavier object like a class. We had an awkward moment. I thanked him for the interview and went on my way. Interviews are one of those "best foot forward" kind of times, and this did not feel like my best foot forward. It felt rough.
 
