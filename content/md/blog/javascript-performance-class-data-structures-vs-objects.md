@@ -1,5 +1,5 @@
 ---
-date: 2020-01-16T23:21:26.430Z
+date: 2020-01-28T15:21:26.430Z
 description: >-
   When does it make sense to use a Class strictly as a data structure in
   JavaScript?
