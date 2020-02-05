@@ -72,9 +72,9 @@ const classArray = buildArray(i => new ClassTest(i));
 
 Alright. Profiler time. How do the two methods stack up?
 
-![Profile of array of 1,000,000 hashmap objects](/static/img/object_vs_class_as_hashmap_-_object_array.png "1,000,000 hashmap object array")
+![Profile of array of 1,000,000 hashmap objects](/img/object_vs_class_as_hashmap_-_object_array.png "1,000,000 hashmap object array")
 
-![Profile of array of 1,000,000 hashmap class instances](/static/img/object_vs_class_as_hashmap_-_class_instance_array.png "1,000,000 hashmap class instance array")
+![Profile of array of 1,000,000 hashmap class instances](/img/object_vs_class_as_hashmap_-_class_instance_array.png "1,000,000 hashmap class instance array")
 
 So, what are we seeing here?
 

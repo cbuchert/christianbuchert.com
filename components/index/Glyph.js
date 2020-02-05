@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ChrisGlyph from "../../static/img/chris-glyph.svg";
+import ChrisGlyph from "../../public/img/chris-glyph.svg";
 import { easing, styler, tween } from "popmotion";
 
 export default function Glyph() {
