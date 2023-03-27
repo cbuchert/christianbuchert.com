@@ -1,16 +1,12 @@
-export const generateLSystem = (axiom: string, rules: Map<string, string>, iterations: number): string => {
-  let result = axiom;
+export type LSystemRules = Map<string, string>;
+
+export const generateLSystem = (axiom: string, rules: LSystemRules, iterations: number): string => {
+  let current = axiom;
   for (let i = 0; i < iterations; i++) {
-    let newResult = "";
-    for (let j = 0; j < result.length; j++) {
-      let char = result[j];
-      if (rules.has(char)) {
-        newResult += rules.get(char);
-      } else {
-        newResult += char;
-      }
-    }
-    result = newResult;
+    current = current
+      .split("")
+      .map((c) => rules.get(c) || c)
+      .join("");
   }
-  return result;
+  return current;
 }
