@@ -37,7 +37,7 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.titleCard}>
           <h1>Chris Buchert</h1>
-          <h2>Software Developer, Curious Android</h2>
+          <h2>Software Developer, Cautious Yet Optimistic Android</h2>
           <p>I&apos;m an engineer, currently based in Utah, USA (America / Denver Time).</p>
           <p>I build web apps, mostly in TypeScript, mostly using React.</p>
           <p className={styles.titleLinks}>[<a href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</a>] [<a href="https://github.com/cbuchert">Github</a>]</p>

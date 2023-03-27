@@ -11,7 +11,7 @@ export function renderLSystem(canvas: HTMLCanvasElement, lSystemString: string, 
   ctx.clearRect(0, 0, canvas.width, canvas.height)
 
 //   Start drawing at the bottom center of the canvas
-  ctx.translate(canvas.width / 2, canvas.height)
+  ctx.translate(canvas.width / 2, canvas.height - 20)
 
 // Write a loop to iterate over the lSystemString and draw the lines
   for (let i = 0; i < lSystemString.length; i ++) {
