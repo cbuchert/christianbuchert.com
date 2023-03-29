@@ -1,0 +1,41 @@
+.canvas {
+  @apply left-0;
+  @apply top-0;
+  @apply absolute;
+  @apply z-[-1];
+}
+
+.main {
+  @apply flex flex-col md:flex-row;
+  @apply justify-between;
+  @apply px-4;
+  @apply py-20;
+  @apply gap-4 md:gap-10;
+}
+
+.inputContainer {
+  @apply flex;
+  @apply flex-col;
+  @apply gap-2;
+  @apply justify-start;
+  @apply items-end;
+}
+
+.inputContainer input {
+  @apply h-4;
+  @apply border border-gray-300 rounded;
+  @apply px-3;
+  @apply py-4;
+}
+
+.inputContainer button {
+  @apply bg-blue-500 hover:bg-blue-600 active:bg-blue-700;
+  @apply border border-gray-300;
+  @apply rounded;
+  @apply text-white;
+  @apply font-bold;
+  @apply px-4;
+  @apply py-2;
+  @apply focus:outline-none;
+  @apply transition-colors duration-300 ease-in-out;
+}
