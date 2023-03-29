@@ -28,7 +28,8 @@ const Page: NextPage = () => {
   return (
     <>
       <canvas className={styles.canvas} height={windowSize.height} width={windowSize.width} ref={canvasRef}/>
-      <main>
+      <main className={styles.main}>
+        <h1>Grass L-Tree</h1>
         <div className={styles.inputContainer}>
           <label>Depth <input type="text"  {...depthInput} /></label>
           <label>Angle <input type="text"  {...angleInput} /></label>
