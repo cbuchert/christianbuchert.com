@@ -1,10 +1,11 @@
 import type { NextPage } from "next"
+import Link from "next/link"
 
 const Experiments: NextPage = (props) => {
   return (<div>
     <h1>Experiments</h1>
     <ul>
-      <li><a href="/experiments/l-tree-grass">L-Tree Grass</a></li>
+      <li><Link href="/experiments/l-tree-grass">L-Tree Grass</Link></li>
     </ul>
   </div>)
 }

@@ -1,5 +1,6 @@
 import type { NextPage } from "next"
 import Head from "next/head"
+import Link from "next/link"
 import { useRef } from "react"
 import { useWindowSize } from "usehooks-ts"
 import { useInput } from "../hooks/useInput"
@@ -42,13 +43,13 @@ const Home: NextPage = () => {
           <div className={styles.aboutMe}>
             <p>I&apos;m an engineer, currently based in Utah, USA (America / Denver Time).</p>
             <p>I build web apps, mostly in TypeScript, mostly using React.</p>
-            <p><a href="/experiments">Take a look at some past experiments.</a></p>
+            <p><Link href="/experiments">Take a look at some past experiments.</Link></p>
 
           </div>
           <p className={styles.titleLinks}>
-            [<a href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</a>]
-            [<a href="https://github.com/cbuchert">Github</a>]
-            [<a href="https://github.com/cbuchert/christianbuchert.com">This page on Github</a>]
+            [<Link href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</Link>]
+            [<Link href="https://github.com/cbuchert">Github</Link>]
+            [<Link href="https://github.com/cbuchert/christianbuchert.com">This page on Github</Link>]
           </p>
         </div>
         <div className={styles.inputContainer}>
