@@ -1,97 +1,89 @@
 .container {
-  height: 100vh;
-  width: 100vw;
+  @apply h-full;
+  @apply w-full;
 }
 
 .canvas {
-  left: 0;
-  top: 0;
-  position: absolute;
-  z-index: -1;
+  @apply left-0;
+  @apply top-0;
+  @apply absolute;
+  @apply z-[-1];
 }
 
 .main {
-  display: flex;
-  justify-content: space-between;
-  padding: 3.5rem 5rem;
+  @apply flex flex-col md:flex-row;
+  @apply justify-between;
+  @apply px-4;
+  @apply py-20;
+  @apply gap-4 md:gap-10;
 }
 
 .inputContainer {
-  align-items: end;
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
-  justify-content: start;
+  @apply flex;
+  @apply flex-col;
+  @apply gap-2;
+  @apply justify-start;
+  @apply items-end;
 }
 
 .inputContainer input {
-  height: 2rem;
-  border: 1px solid #eaeaea;
-  border-radius: 4px;
-  padding: 0 .5rem;
+  @apply h-4;
+  @apply border border-gray-300 rounded;
+  @apply px-3;
+  @apply py-4;
 }
 
 .inputContainer button {
-  background-color: #0070f3;
-  border: 1px solid #eaeaea;
-  border-radius: 4px;
-  color: #fff;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: .5rem 1rem;
-}
-
-.inputContainer button:hover {
-  background-color: #0060d3;
-}
-
-.inputContainer button:active {
-  background-color: #0050b3;
-}
-
-.inputContainer button:focus {
-  outline: none;
+  @apply bg-blue-500 hover:bg-blue-600 active:bg-blue-700;
+  @apply border border-gray-300;
+  @apply rounded;
+  @apply text-white;
+  @apply font-bold;
+  @apply px-4;
+  @apply py-2;
+  @apply focus:outline-none;
+  @apply transition-colors duration-300 ease-in-out;
 }
 
 .titleCard {
-  padding: 0 2rem;
-  z-index: 1;
+  @apply z-10;
+  @apply mb-12;
 }
 
 .titleCard h1 {
-  color: #0a0a0a;
-  font-size: 4rem;
-  font-weight: 800;
-  margin: 0;
+  @apply text-6xl;
+  @apply font-bold;
+  @apply text-gray-900;
+  @apply mb-2;
 }
 
 .titleCard h2 {
-  color: #555;
-  font-size: 2rem;
-  font-weight: 400;
-  margin: 0 0 3rem 0;
+  @apply text-2xl;
+  @apply font-semibold;
+  @apply text-gray-800;
+  @apply mt-0 mb-10 ml-0 mr-0;
+}
+
+.aboutMe {
+  @apply text-gray-600;
+  @apply font-normal;
+  @apply text-lg;
+  @apply mt-10;
+  @apply flex flex-col;
+  @apply gap-4;
 }
 
 .titleCard p {
-  color: #666;
-  font-size: 1rem;
-  font-weight: 400;
-  /*margin: 0;*/
+  @apply text-gray-600;
+  @apply font-normal;
+  @apply text-lg;
 }
 
 .titleCard a {
-  color: #0070f3;
-  text-decoration: none;
-}
-
-.titleCard a:hover {
-  text-decoration: underline;
-}
-
-.titleCard a:active {
-  color: #0050b3;
+  @apply text-blue-500;
+  @apply no-underline hover:underline active:text-blue-700;
 }
 
 .titleCard .titleLinks {
-  margin-top: 5rem;
+  @apply mt-10;
 }
