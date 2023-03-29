@@ -2,7 +2,7 @@ import type { NextPage } from "next"
 import { useRef } from "react"
 import { useWindowSize } from "usehooks-ts"
 import { useInput } from "../../hooks/useInput"
-import styles from "../../styles/l-tree-grass.module.css"
+import styles from "../../styles/experiments.module.css"
 import { generateLSystem } from "../../utils/generateLSystem"
 import { renderLSystem } from "../../utils/renderLSystem"
 

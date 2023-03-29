@@ -13,12 +13,22 @@
   @apply gap-4 md:gap-10;
 }
 
+.main h1 {
+  @apply text-4xl md:text-6xl;
+  @apply font-bold;
+  @apply text-gray-800;
+}
+
 .inputContainer {
   @apply flex;
   @apply flex-col;
   @apply gap-2;
   @apply justify-start;
   @apply items-end;
+  @apply rounded;
+  @apply bg-white;
+  @apply shadow-lg;
+  @apply p-4;
 }
 
 .inputContainer input {

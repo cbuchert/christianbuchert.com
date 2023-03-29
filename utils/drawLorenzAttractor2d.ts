@@ -5,17 +5,16 @@ const MAX_Y = 35
 const MIN_Z = 0
 const MAX_Z = 60
 
-export function drawLorenzAttractor2d(canvas: HTMLCanvasElement, x: number, y: number, z: number, sigma: number, rho: number, beta: number, dt: number) {
+export function drawLorenzAttractor2d(canvas: HTMLCanvasElement, x: number, y: number, z: number, sigma: number, rho: number, beta: number, deltaT: number, scaleFactor: number) {
   const ctx = canvas.getContext("2d")
-  const scaleFactor = 10
 
   if (!ctx) {
     return
   }
 
-  const deltaX = (sigma * (y - x)) * dt
-  const deltaY = (x * (rho - z) - y) * dt
-  const deltaZ = (x * y - beta * z) * dt
+  const deltaX = (sigma * (y - x)) * deltaT
+  const deltaY = (x * (rho - z) - y) * deltaT
+  const deltaZ = (x * y - beta * z) * deltaT
 
 //   Set the color of the line.
 //   Calculate a red value based on the x value, normalized between MIN_X and MAX_X.
@@ -27,7 +26,7 @@ export function drawLorenzAttractor2d(canvas: HTMLCanvasElement, x: number, y: n
   ctx.strokeStyle = `rgb(${red}, ${green}, ${blue})`
 
 //   Set the thickness of the line, normalized between MIN_Z and MAX_Z. Don't exceed 10.
-  ctx.lineWidth = Math.min((z - MIN_Z) / (MAX_Z - MIN_Z) * 10, 10)
+  ctx.lineWidth = Math.min((z - MIN_Z) / (MAX_Z - MIN_Z) * scaleFactor, scaleFactor)
 
 //   Draw a line from the current point to the next point.
   ctx.beginPath()
@@ -36,8 +35,8 @@ export function drawLorenzAttractor2d(canvas: HTMLCanvasElement, x: number, y: n
   ctx.stroke()
 
 //   Request animation frame for smooth animation.
-  requestAnimationFrame(() => {
+  return requestAnimationFrame(() => {
     //   Draw the next iteration of the lorenz attractor.
-    drawLorenzAttractor2d(canvas, x + deltaX, y + deltaY, z + deltaZ, sigma, rho, beta, dt)
+    drawLorenzAttractor2d(canvas, x + deltaX, y + deltaY, z + deltaZ, sigma, rho, beta, deltaT, scaleFactor)
   })
 }
