@@ -39,11 +39,15 @@ const Home: NextPage = () => {
           <h1>Chris Buchert</h1>
           <h2>Software Developer, Cautious Yet Optimistic Android</h2>
           <div className={styles.aboutMe}>
-          <p>I&apos;m an engineer, currently based in Utah, USA (America / Denver Time).</p>
-          <p>I build web apps, mostly in TypeScript, mostly using React.</p>
+            <p>I&apos;m an engineer, currently based in Utah, USA (America / Denver Time).</p>
+            <p>I build web apps, mostly in TypeScript, mostly using React.</p>
 
           </div>
-          <p className={styles.titleLinks}>[<a href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</a>] [<a href="https://github.com/cbuchert">Github</a>]</p>
+          <p className={styles.titleLinks}>
+            [<a href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</a>]
+            [<a href="https://github.com/cbuchert">Github</a>]
+            [<a href="https://github.com/cbuchert/christianbuchert.com">This page on Github</a>]
+          </p>
         </div>
         <div className={styles.inputContainer}>
           <label>Depth <input type="text"  {...depthInput} /></label>
