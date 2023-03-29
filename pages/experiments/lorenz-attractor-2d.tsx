@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
 import { useEffect, useRef } from "react"
 import { useWindowSize } from "usehooks-ts"
-import { drawLorenzAttractor } from "../../utils/drawLorenzAttractor"
+import { drawLorenzAttractor2d } from "../../utils/drawLorenzAttractor2d"
 
 const Page: NextPage = () => {
   const windowSize = useWindowSize()
@@ -17,7 +17,7 @@ const Page: NextPage = () => {
         ctx.fillRect(0, 0, windowSize.width, windowSize.height)
       }
 
-      drawLorenzAttractor(ref.current, .01, .01, 0, 10, 28, 8/3, .01)
+      drawLorenzAttractor2d(ref.current, .01, .01, 0, 10, 28, 8/3, .01)
     }
   }, [windowSize])
 
