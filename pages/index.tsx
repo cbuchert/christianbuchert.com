@@ -44,7 +44,6 @@ const Home: NextPage = () => {
             <p>I&apos;m an engineer, currently based in Utah, USA (America / Denver Time).</p>
             <p>I build web apps, mostly in TypeScript, mostly using React.</p>
             <p><Link href="/experiments">Take a look at some past experiments.</Link></p>
-
           </div>
           <p className={styles.titleLinks}>
             [<Link href="https://www.linkedin.com/in/christianbuchert/">LinkedIn</Link>]

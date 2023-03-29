@@ -6,6 +6,7 @@ const Experiments: NextPage = (props) => {
     <h1>Experiments</h1>
     <ul>
       <li><Link href="/experiments/l-tree-grass">L-Tree Grass</Link></li>
+      <li><Link href="/experiments/lorenz-attractor">Lorenz Attractor</Link></li>
     </ul>
   </div>)
 }
