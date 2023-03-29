@@ -17,6 +17,7 @@
   @apply text-4xl md:text-6xl;
   @apply font-bold;
   @apply text-gray-800;
+  @apply mb-12 md:mb-0;
 }
 
 .inputContainer {
@@ -26,7 +27,7 @@
   @apply justify-start;
   @apply items-end;
   @apply rounded;
-  @apply bg-white;
+  @apply bg-white bg-opacity-50 backdrop-blur;
   @apply shadow-lg;
   @apply p-4;
 }
