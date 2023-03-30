@@ -33,7 +33,7 @@ const Page: NextPage = () => {
     <FullWidthLayout>
       <canvas ref={ref} height={windowSize.height} width={windowSize.width} className={styles.canvas}/>
       <main className={styles.main}>
-        <h1>Lorenz Attractor 2D</h1>
+        <h1>2D Lorenz Attractor</h1>
         <div className={styles.inputContainer}>
           <label>x <input type="number" {...xField} /></label>
           <label>y <input type="number" {...yField} /></label>
