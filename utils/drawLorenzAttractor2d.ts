@@ -1,3 +1,5 @@
+// https://www.dynamicmath.xyz/strange-attractors/
+
 const MIN_X = - 25
 const MAX_X = 25
 const MIN_Y = - 30
