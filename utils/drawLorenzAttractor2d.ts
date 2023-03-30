@@ -13,7 +13,7 @@ export function drawLorenzAttractor2d(canvas: HTMLCanvasElement, x: number, y: n
   }
 
   // lighten the background by putting a semitransparent white rectangle over the entire canvas
-  ctx.fillStyle = "rgba(255, 255, 255, 0.01)"
+  ctx.fillStyle = "rgba(255, 255, 255, 0.05)"
   ctx.fillRect(0, 0, canvas.width, canvas.height)
 
   const deltaX = (sigma * (y - x)) * deltaT
