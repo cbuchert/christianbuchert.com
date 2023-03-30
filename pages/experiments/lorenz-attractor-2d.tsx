@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import { useRef } from "react"
 import { useWindowSize } from "usehooks-ts"
+import { FullWidthLayout } from "../../components/layouts/FullWidthLayout"
 import { useInput } from "../../hooks/useInput"
 import styles from "../../styles/experiments.module.css"
 import { drawLorenzAttractor2d } from "../../utils/drawLorenzAttractor2d"
@@ -29,7 +30,7 @@ const Page: NextPage = () => {
   }
 
   return (
-    <>
+    <FullWidthLayout>
       <canvas ref={ref} height={windowSize.height} width={windowSize.width} className={styles.canvas}/>
       <main className={styles.main}>
         <h1>Lorenz Attractor 2D</h1>
@@ -42,7 +43,7 @@ const Page: NextPage = () => {
           <button type="button" onClick={handleClick}>Send &apos;er, bud.</button>
         </div>
       </main>
-    </>
+    </FullWidthLayout>
   )
 }
 

@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import { useRef } from "react"
 import { useWindowSize } from "usehooks-ts"
+import { FullWidthLayout } from "../../components/layouts/FullWidthLayout"
 import { useInput } from "../../hooks/useInput"
 import styles from "../../styles/experiments.module.css"
 import { generateLSystem } from "../../utils/generateLSystem"
@@ -26,7 +27,7 @@ const Page: NextPage = () => {
   }
 
   return (
-    <>
+    <FullWidthLayout>
       <canvas className={styles.canvas} height={windowSize.height} width={windowSize.width} ref={canvasRef}/>
       <main className={styles.main}>
         <h1>Grass L-Tree</h1>
@@ -38,7 +39,7 @@ const Page: NextPage = () => {
           <button type={"button"} onClick={handleClick}>Send &apos;er, bud.</button>
         </div>
       </main>
-    </>
+    </FullWidthLayout>
   )
 }
 
