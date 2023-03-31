@@ -13,7 +13,7 @@
 .main {
   @apply flex flex-col md:flex-row;
   @apply justify-between;
-  @apply px-4;
+  @apply px-4 md:px-20;
   @apply py-20;
   @apply gap-4 md:gap-10;
 }
