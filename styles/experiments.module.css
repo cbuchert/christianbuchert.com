@@ -6,11 +6,8 @@
 }
 
 .links {
-  @apply flex flex-col md:flex-row;
-  @apply justify-between;
   @apply px-4;
   @apply py-20;
-  @apply gap-4 md:gap-10;
   @apply text-blue-600 hover:text-blue-700 active:text-blue-800;
   @apply transition-colors;
 }

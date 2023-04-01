@@ -11,6 +11,7 @@ const Experiments: NextPage = (props) => {
       <li><Link href="/experiments/lorenz-attractor-2d">2D Lorenz Attractor</Link></li>
       <li><Link href="/experiments/aizawa-attractor-2d">2D Aizawa Attractor</Link></li>
       <li><Link href="/experiments/confetti-cannon">Confetti Cannon</Link></li>
+      <li><Link href="/experiments/gravity">Gravity</Link></li>
     </ul>
   </FixedWidthLayout>)
 }
