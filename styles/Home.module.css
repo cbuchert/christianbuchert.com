@@ -18,6 +18,13 @@
   @apply gap-4 md:gap-10;
 }
 
+.glyph {
+  @apply w-20;
+  @apply h-auto;
+  @apply inline-block;
+  @apply max-w-fit;
+}
+
 .inputContainer {
   @apply flex;
   @apply flex-col;
@@ -48,6 +55,9 @@
 .titleCard {
   @apply z-10;
   @apply mb-12;
+  @apply bg-slate-100;
+  @apply px-8 py-6;
+  @apply rounded;
 }
 
 .titleCard h1 {
