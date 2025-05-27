@@ -30,7 +30,7 @@ const Home: NextPage = () => {
             <p><Link href="/experiments">Take a look at some past experiments.</Link></p>
           </div>
           <div className={styles.section}>
-            <p>Some projects I've built over the years</p>
+            <p>Some projects I&apos;ve built over the years</p>
             <ul>
               <li><Link href="https://aci-lch.christianbuchert.com/">ACI in LCH</Link> - LCH projection of AutoCAD pens.</li>
               <li><Link href="https://keybud.io">Keybud</Link> - A tool to help identify browser keyboard shortcuts.</li>
