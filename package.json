@@ -1,29 +1,26 @@
 {
-  "name": "christianbuchert.com",
-  "version": "0.1.0",
-  "private": true,
+  "name": "christianbuchert-com",
+  "type": "module",
+  "version": "0.0.1",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
-    "classnames": "^2.3.2",
-    "next": "13.2.4",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "usehooks-ts": "^2.9.1"
+    "@astrojs/mdx": "^4.3.9",
+    "@astrojs/rss": "^4.0.13",
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^5.15.2",
+    "sharp": "^0.34.3"
   },
   "devDependencies": {
-    "@types/react": "18.0.29",
-    "autoprefixer": "^10.4.14",
-    "eslint": "8.36.0",
-    "eslint-config-next": "13.2.4",
-    "eslint-config-prettier": "^8.8.0",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.3.0",
-    "typescript": "5.0.2",
-    "vitest": "^0.29.7"
+    "@antfu/eslint-config": "^6.1.0",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-plugin-astro": "^1.4.0",
+    "eslint-plugin-format": "^1.0.2"
   }
 }

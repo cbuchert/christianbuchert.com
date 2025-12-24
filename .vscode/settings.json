@@ -1,0 +1,24 @@
+{
+  "prettier.enable": false, // Disable Prettier since Antfu handles formatting
+  "editor.formatOnSave": false, // Let ESLint handle it instead
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never" // Optional: prevent conflicts
+  },
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "astro",
+    "typescript",
+    "typescriptreact",
+    "markdown" // Add this
+  ],
+  "[astro]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  }
+}

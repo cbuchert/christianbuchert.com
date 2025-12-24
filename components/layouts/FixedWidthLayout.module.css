@@ -1,7 +1,0 @@
-.layout {
-}
-
-.container {
-  @apply mx-auto max-w-full md:max-w-screen-md lg:max-w-screen-lg;
-  @apply px-4;
-}
