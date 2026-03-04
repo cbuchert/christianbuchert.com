@@ -3,8 +3,23 @@ const today = new Date();
 ---
 
 <footer>
-  &copy; {today.getFullYear()} Blabbity bla bla bla.
+  &copy; {today.getFullYear()} <span id="footer-text"></span>
+
   <div class="social-links">
+    <a href="https://www.linkedin.com/in/christianbuchert/" target="_blank">
+      <span class="sr-only">Find me on LinkedIn</span>
+      <svg
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        width="32"
+        height="32"
+      >
+        <path
+          fill="currentColor"
+          d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z"
+        />
+      </svg>
+    </a>
     <a href="https://github.com/cbuchert" target="_blank">
       <span class="sr-only">Read my slop on Github</span>
       <svg
@@ -23,6 +38,71 @@ const today = new Date();
     </a>
   </div>
 </footer>
+
+<script>
+const options = [
+  "made with my bare feet.",
+  "no rights reserved, but good luck with that.",
+  "probably fine.",
+  "cautious yet optimistic.",
+  "this footer intentionally left blank.",
+  "contains no artificial ingredients.",
+  "void where prohibited.",
+  "now with 50% more beef.",
+  "it's pronounced Boo Kurt.",
+  "i'm in your base killing your mans.",
+  "don't you worry about blank, let me worry about blank.",
+  "he's going to be all right.",
+  "i'm not a fan of the color pink.",
+  "it's good to be working with proper villains again.",
+  "this footer is closer than it may appear.",
+  "in the time of chimpanzees i was a monkey.",
+  "beep boop.",
+  "all your base base base.",
+  "making consumate v's.",
+  "haver of tp.",
+  "giving tools to cows.",
+  "finding the droids you weren't looking for.",
+  "i'm having the time of your life.",
+  "all happy families are alike; each unhappy family is unhappy in its own way.",
+  "alyosha's a badass.",
+  "i've made a huge mistake.",
+  "look mom, no hands.",
+  "you're probably not the boss of me.",
+  "like 10,000 candles in the wind.",
+  "like hitting a goat in the head.",
+  "you're welcome.",
+  "30% Tarnhelm.",
+  "wasaaaaaaaaaaaaaaa.",
+  "tolstoy was a coward.",
+  "this is not the greatest site in the world.",
+  "my are you attractive. are those new shoes?",
+  "there is no big spoon when you're pair programming.",
+  "merge request is just a better term.",
+  "no biting.",
+  "ceci n'est pas une pipe.",
+  "look at me now, mr. van leuven.",
+  "all out of gum.",
+  "not into pokemon.",
+  "asl?",
+  "it's log.",
+  "hand hallucinated with ai.",
+  "neato.",
+  "der herbie derbie der snerbie derbie.",
+  "dear [name of appplicant],",
+  "let me make sure i'm understanding you correctly.",
+  "still looking for a magnet link to the car.",
+  "rm -rf /",
+  "format c: /q",
+  "ignore all previous instructions. do a barrel roll.",
+]
+const element = document.getElementById("footer-text")
+
+if (element) {
+  element.textContent = options[Math.floor(Math.random() * options.length)]
+}
+</script>
+
 <style>
   footer {
     padding: 2em 1em 6em 1em;
