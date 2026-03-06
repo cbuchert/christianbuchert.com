@@ -41,6 +41,15 @@ const { title, url, description, screenshot } = Astro.props
     font-size: 1.25em;
   }
 
+  h3 a {
+    color: rgb(var(--black));
+    text-decoration: none;
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+  }
+
   p {
     margin: 0;
     color: rgb(var(--gray));
