@@ -21,4 +21,15 @@ const til = defineCollection({
   schema: z.object({}),
 })
 
-export const collections = { blog, til }
+const projects = defineCollection({
+  loader: glob({ base: "./src/content/projects", pattern: "**/*.md" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      url: z.string().url(),
+      description: z.string(),
+      screenshot: image().optional(),
+    }),
+})
+
+export const collections = { blog, projects, til }
