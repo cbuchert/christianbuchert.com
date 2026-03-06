@@ -1,0 +1,68 @@
+---
+import { getCollection, render } from "astro:content"
+import FormattedDate from "./formatted-date.astro"
+
+const entries = await getCollection("til")
+
+const sorted = entries.sort((a, b) => {
+  return new Date(b.id).getTime() - new Date(a.id).getTime()
+})
+
+const latest = sorted[0]
+const date = new Date(latest.id)
+const { Content } = await render(latest)
+---
+
+<aside class="til-card">
+  <div class="til-card-header">
+    <span class="til-label">Today I Learned</span>
+    <FormattedDate date={date} />
+  </div>
+  <div class="til-card-body">
+    <Content />
+  </div>
+</aside>
+
+<style>
+  .til-card {
+    border: 1px solid rgb(var(--gray-light));
+    border-radius: 8px;
+    padding: 1.25em 1.5em;
+    box-shadow: var(--box-shadow);
+    margin: 1.5em 0;
+  }
+
+  .til-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.75em;
+    border-bottom: 1px solid rgb(var(--gray-light));
+  }
+
+  .til-label {
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+  }
+
+  .til-card-header time {
+    font-size: 0.85em;
+    color: rgb(var(--gray));
+  }
+
+  .til-card-body {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: rgb(var(--gray-dark));
+    margin: 0;
+  }
+
+  .til-card-body :global(p) {
+    margin: 0;
+  }
+</style>
