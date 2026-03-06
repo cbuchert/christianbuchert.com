@@ -1,6 +1,4 @@
-<span id="footer-quip"></span>
-
-<script>
+---
 const options = [
   "made with my bare feet.",
   "no rights reserved, but good luck with that.",
@@ -61,8 +59,7 @@ const options = [
   "mom's molten boron.",
 ]
 
-const element = document.getElementById("footer-quip")
-if (element) {
-  element.textContent = options[Math.floor(Math.random() * options.length)]
-}
-</script>
+const quip = options[Math.floor(Math.random() * options.length)]
+---
+
+<span>{quip}</span>
