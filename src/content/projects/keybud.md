@@ -4,4 +4,6 @@ url: "https://keybud.io/"
 subtitle: "A tool to help identify browser keyboard shortcuts."
 ---
 
-Keyboard shortcuts exist. You just don't know which ones. Keybud listens as you work and shows you what shortcuts apply to what you just did. Good for people who want to stop reaching for the mouse without reading a manual first.
+Browsers ship with a lot of keyboard shortcuts. Most developers don't know all of them. Some don't know they exist. Keybud makes the case that you can't just claim any key combination you want in a web app without potentially stepping on something your users already rely on.
+
+Type a shortcut. See what the browser thinks it means.
