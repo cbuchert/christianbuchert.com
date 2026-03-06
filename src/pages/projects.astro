@@ -15,7 +15,7 @@ const projects = (await getCollection("projects")).sort((a, b) =>
   <ul>
     {projects.map(project => (
       <li>
-        <ProjectCard {...project.data} />
+        <ProjectCard entry={project} />
       </li>
     ))}
   </ul>
