@@ -18,7 +18,6 @@ import HeaderLink from "./header-link.astro";
 <style>
   header {
     margin: 0;
-    padding: 0 1em;
     background: white;
     box-shadow: 0 2px 8px rgba(var(--black), 5%);
   }
@@ -26,7 +25,6 @@ import HeaderLink from "./header-link.astro";
     margin: 0;
     font-size: 1em;
   }
-
   h2 a,
   h2 a.active {
     text-decoration: none;
@@ -53,6 +51,15 @@ import HeaderLink from "./header-link.astro";
   @media (max-width: 720px) {
     .social-links {
       display: none;
+    }
+    nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+    .internal-links {
+      display: flex;
+      gap: 0.25em;
     }
   }
 </style>
