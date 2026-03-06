@@ -1,7 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content"
 import { getCollection, render } from "astro:content"
-import BlogPost from "../../layouts/blog-post.astro"
+import BlogPost from "../../components/layouts/blog-post.astro"
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog")
