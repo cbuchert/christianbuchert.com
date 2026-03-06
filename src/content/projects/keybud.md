@@ -4,4 +4,4 @@ url: "https://keybud.io/"
 subtitle: "A tool to help identify browser keyboard shortcuts."
 ---
 
-Browser keyboard shortcuts are invisible until you already know them. Keybud listens to keystrokes and surfaces the shortcuts associated with them, making it easier to discover and internalize the shortcuts for tools you use every day.
+Keyboard shortcuts exist. You just don't know which ones. Keybud listens as you work and shows you what shortcuts apply to what you just did. Good for people who want to stop reaching for the mouse without reading a manual first.
