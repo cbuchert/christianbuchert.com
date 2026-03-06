@@ -9,14 +9,12 @@ const { title, url, description, screenshot } = Astro.props
 
 <article class="project-card">
   {screenshot && (
-    <a href={url} target="_blank" class="screenshot-link">
+    <a href={url} target="_blank" rel="noopener noreferrer" class="screenshot-link">
       <Image src={screenshot} alt={`Screenshot of ${title}`} width={720} height={480} />
     </a>
   )}
-  <div class="project-body">
-    <h3><a href={url} target="_blank">{title}</a></h3>
-    <p>{description}</p>
-  </div>
+  <h3><a href={url} target="_blank" rel="noopener noreferrer">{title}</a></h3>
+  <p>{description}</p>
 </article>
 
 <style>
@@ -38,12 +36,12 @@ const { title, url, description, screenshot } = Astro.props
     opacity: 0.85;
   }
 
-  .project-body h3 {
+  h3 {
     margin: 0 0 0.25em 0;
     font-size: 1.25em;
   }
 
-  .project-body p {
+  p {
     margin: 0;
     color: rgb(var(--gray));
   }
