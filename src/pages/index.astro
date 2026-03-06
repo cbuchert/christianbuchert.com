@@ -1,13 +1,14 @@
 ---
+import LatestTil from "../components/latest-til.astro"
 import BaseLayout from "../layouts/base.astro";
-import LatestTil from "../components/latest-til.astro";
 ---
 
 <BaseLayout title="Home" description="Product engineer. I build things on the web.">
   <h1>Chris Buchert</h1>
   <h5>Cautious Yet Optimistic Android.</h5>
+  <LatestTil />
   <p>
-    I build products. Mostly web, some mobile, always TypeScript. I care about the whole thing: the problem, the design, the code, the delivery.
+    I build products. Mostly web, some mobile, usually TypeScript. I care about the whole thing: the problem, the design, the code, the delivery.
   </p>
   <p>
     Based in Utah. Working on some things. Occasionally writing about them.
@@ -15,7 +16,6 @@ import LatestTil from "../components/latest-til.astro";
   <p>
     In the area and want to grab lunch sometime? <a target="_blank" href="https://www.linkedin.com/in/christianbuchert/">Find me on LinkedIn</a>.
   </p>
-  <LatestTil />
   <script>
     // eslint-disable-next-line no-console
     console.log(":chef-kiss So clean.")
