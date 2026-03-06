@@ -4,6 +4,8 @@ url: "https://aci-lch.christianbuchert.com/"
 subtitle: "LCH projection of AutoCAD pens."
 ---
 
-AutoCAD layers get pen colors. CAD managers pick them. Draftspeople live with them, usually in both light and dark mode. Picking colors that work well in both is hard to reason about when your only tool is a numbered palette.
+AutoCAD ships with 255 pen colors. Autodesk assigned them without much apparent concern for how they read on light backgrounds, dark backgrounds, or both — and since AutoCAD lets users pick their own background color, a CAD manager designing a layer system is essentially designing blind.
 
-This maps the full ACI palette into LCH, a perceptually uniform color space. You can see at a glance which colors hold up across backgrounds, which cluster into families, and how to build conceptual mappings between layer groups and the colors that represent them.
+ACI in LCH renders all 255 colors against both a light and a dark ground, and projects their RGB values into LCH space so you can see how they cluster chromatically. The result is a clearer picture of which colors are actually usable, which ones read consistently across background conditions, and which families sit close enough together to encode meaningful relationships between layers.
+
+Built for myself. Posted in case it's useful to anyone else who has ever had opinions about layer standards.
