@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets"
 import { getCollection } from "astro:content"
-import FormattedDate from "../../components/formatted-date.astro"
+import FormattedDate from "../../components/atoms/formatted-date.astro"
 import BaseLayout from "../../layouts/base.astro"
 
 const posts = (await getCollection("blog")).sort(
