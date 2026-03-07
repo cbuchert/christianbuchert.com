@@ -59,16 +59,20 @@ const { Content } = await render(entry)
 
   h3 a {
     color: rgb(var(--black));
-    text-decoration: none;
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--gray-light));
+    text-underline-offset: 3px;
   }
 
   h3 a:hover {
     color: var(--accent);
+    text-decoration-color: var(--accent);
   }
 
   .subtitle {
     margin: 0;
     color: rgb(var(--gray));
+    font-style: italic;
   }
 
   .project-description {
