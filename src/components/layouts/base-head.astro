@@ -27,6 +27,12 @@ const { title, description, image = FallbackImage } = Astro.props;
   title="Chris Buchert | RSS Feed"
   href={new URL("rss.xml", Astro.site)}
 />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title="Chris Buchert | TIL"
+  href={new URL("til-rss.xml", Astro.site)}
+/>
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
