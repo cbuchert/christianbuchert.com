@@ -20,7 +20,6 @@ export async function GET(context) {
       }),
       pubDate: new Date(entry.id),
       description: entry.body,
-      link: "/",
     })),
   })
 }
