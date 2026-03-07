@@ -14,11 +14,9 @@ const rendered = await Promise.all(sorted.map(entry => render(entry)))
   <div class="til-card-header">
     <span class="til-label">Today I Learned</span>
     <div class="til-controls">
+      <button id="til-older" aria-label="Older entry" disabled={sorted.length <= 1}>← Older</button>
       <time id="til-date" datetime={sorted[0].id}>{sorted[0].id}</time>
-      <div class="til-nav">
-        <button id="til-newer" aria-label="Newer entry" disabled>→</button>
-        <button id="til-older" aria-label="Older entry" disabled={sorted.length <= 1}>←</button>
-      </div>
+      <button id="til-newer" aria-label="Newer entry" disabled>Newer →</button>
     </div>
   </div>
   <div class="til-entries">
@@ -94,26 +92,21 @@ const rendered = await Promise.all(sorted.map(entry => render(entry)))
     color: rgb(var(--gray));
   }
 
-  .til-nav {
-    display: flex;
-    gap: 0.25em;
-  }
-
-  .til-nav button {
+  .til-controls button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0 0.25em;
-    font-size: 1em;
+    padding: 0;
+    font-size: 0.85em;
     color: rgb(var(--gray-dark));
     line-height: 1;
   }
 
-  .til-nav button:hover:not(:disabled) {
+  .til-controls button:hover:not(:disabled) {
     color: var(--accent);
   }
 
-  .til-nav button:disabled {
+  .til-controls button:disabled {
     color: rgb(var(--gray-light));
     cursor: default;
   }
