@@ -8,6 +8,10 @@ const sorted = entries.sort((a, b) =>
 )
 
 const rendered = await Promise.all(sorted.map(entry => render(entry)))
+
+const dayNames = sorted.map(entry =>
+  new Date(entry.id).toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" })
+)
 ---
 
 <aside class="til-card">
@@ -22,6 +26,7 @@ const rendered = await Promise.all(sorted.map(entry => render(entry)))
   <div class="til-entries">
     {rendered.map(({ Content }, i) => (
       <div class="til-entry" data-date={sorted[i].id} hidden={i !== 0}>
+        <p class="til-day">{dayNames[i]}</p>
         <Content />
       </div>
     ))}
@@ -119,5 +124,11 @@ const rendered = await Promise.all(sorted.map(entry => render(entry)))
 
   .til-entries :global(p) {
     margin: 0;
+  }
+
+  .til-entries :global(.til-day) {
+    font-size: 0.8em;
+    color: rgb(var(--gray));
+    margin: 0 0 0.4em 0;
   }
 </style>
