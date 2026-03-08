@@ -4,20 +4,37 @@ import LatestTil from "@/components/molecules/latest-til.astro"
 ---
 
 <BaseLayout title="Home" description="Product engineer. I build things on the web.">
-  <h1>Chris Buchert</h1>
-  <h5>Cautious Yet Optimistic Android.</h5>
-  <p>
-    I build products. Mostly web, some mobile, usually TypeScript. I care about the whole thing: the problem, the design, the code, the delivery.
-  </p>
-  <p>
-    Based in Utah. Working on some things. Occasionally writing about them.
-  </p>
-  <p>
-    In the area and want to grab lunch sometime? <a target="_blank" href="https://www.linkedin.com/in/christianbuchert/">Find me on LinkedIn</a>.
-  </p>
+  <h1 class="title">Chris Buchert</h1>
+  <h5 class="subtitle">Cautious Yet Optimistic Android.</h5>
+  <section class="intro">
+    <p>
+      I build products. Mostly web, some mobile, usually TypeScript. I care about the whole thing: the problem, the design, the code, the delivery.
+    </p>
+    <p>
+      Based in Utah. Working on some things. Occasionally writing about them.
+    </p>
+    <p>
+      In the area and want to grab lunch sometime? <a target="_blank" href="https://www.linkedin.com/in/christianbuchert/">Find me on LinkedIn</a>.
+    </p>
+  </section>
   <LatestTil />
   <script>
     // eslint-disable-next-line no-console
     console.log(":chef-kiss So clean.")
   </script>
 </BaseLayout>
+
+<style>
+  .title {
+    margin-bottom: 0;
+    line-height: 1;
+  }
+  .subtitle {
+    color: rgb(var(--gray));
+    font-weight: 400;
+  }
+  .intro {
+    margin-top: 2rem;
+    margin-bottom: 4.5rem;
+  }
+</style>
