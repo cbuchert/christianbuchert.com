@@ -1,7 +1,7 @@
 ---
-import BaseHead from "../components/base-head.astro"
-import Footer from "../components/footer.astro"
-import Header from "../components/header.astro"
+import BaseHead from "@/components/layouts/base-head.astro"
+import Footer from "@/components/organisms/footer.astro"
+import Header from "@/components/organisms/header.astro"
 
 const { title, description } = Astro.props;
 ---
@@ -13,7 +13,7 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <Header />
-    <main>
+    <main class="container">
       <slot />
     </main>
     <Footer />

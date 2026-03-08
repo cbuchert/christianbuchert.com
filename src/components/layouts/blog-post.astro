@@ -1,10 +1,10 @@
 ---
 import type { CollectionEntry } from "astro:content"
 import { Image } from "astro:assets"
-import BaseHead from "../components/base-head.astro"
-import Footer from "../components/footer.astro"
-import FormattedDate from "../components/formatted-date.astro"
-import Header from "../components/header.astro"
+import FormattedDate from "@/components/atoms/formatted-date.astro"
+import BaseHead from "@/components/layouts/base-head.astro"
+import Footer from "@/components/organisms/footer.astro"
+import Header from "@/components/organisms/header.astro"
 
 type Props = CollectionEntry<"blog">["data"]
 

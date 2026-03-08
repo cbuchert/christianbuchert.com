@@ -1,0 +1,90 @@
+---
+import type { CollectionEntry } from "astro:content"
+import { Image } from "astro:assets"
+import { render } from "astro:content"
+
+interface Props {
+  entry: CollectionEntry<"projects">
+}
+
+const { entry } = Astro.props
+const { title, url, subtitle, screenshot } = entry.data
+const { Content } = await render(entry)
+---
+
+<article class="project-card">
+  {screenshot && (
+    <a href={url} target="_blank" rel="noopener noreferrer" class="screenshot-link">
+      <Image src={screenshot} alt={`Screenshot of ${title}`} width={720} height={480} />
+    </a>
+  )}
+  <div class="project-info">
+    <h3><a href={url} target="_blank" rel="noopener noreferrer">{title}</a></h3>
+    <p class="subtitle">{subtitle}</p>
+  </div>
+  <div class="project-description">
+    <Content />
+  </div>
+</article>
+
+<style>
+  .project-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+  }
+
+  .screenshot-link img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    transition: opacity 0.2s ease;
+  }
+
+  .screenshot-link:hover img {
+    opacity: 0.85;
+  }
+
+  .project-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15em;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.25em;
+  }
+
+  h3 a {
+    color: rgb(var(--black));
+    text-decoration: underline;
+    text-decoration-color: rgb(var(--gray-light));
+    text-underline-offset: 3px;
+  }
+
+  h3 a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+  }
+
+  .subtitle {
+    margin: 0;
+    color: rgb(var(--gray));
+    font-style: italic;
+  }
+
+  .project-description {
+    font-size: 0.9em;
+    color: rgb(var(--gray-dark));
+  }
+
+  .project-description :global(p) {
+    margin: 0 0 0.75em 0;
+  }
+
+  .project-description :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

@@ -1,0 +1,153 @@
+---
+import { getCollection, render } from "astro:content"
+
+const entries = await getCollection("til")
+
+const sorted = entries.sort((a, b) =>
+  new Date(b.id).getTime() - new Date(a.id).getTime()
+)
+
+const rendered = await Promise.all(sorted.map(entry => render(entry)))
+
+const dayNames = sorted.map(entry =>
+  new Date(entry.id).toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" })
+)
+---
+
+<aside class="til-card">
+  <div class="til-card-header">
+    <span class="til-label">Today I Learned</span>
+    <div class="til-controls">
+      <button id="til-older" aria-label="Older entry" disabled={sorted.length <= 1}>← Older</button>
+      <time id="til-date" datetime={sorted[0].id}>{sorted[0].id}</time>
+      <button id="til-newer" aria-label="Newer entry" disabled>Newer →</button>
+    </div>
+  </div>
+  <div class="til-entries">
+    {rendered.map(({ Content }, i) => (
+      <div class="til-entry" data-date={sorted[i].id} hidden={i !== 0}>
+        <p class="til-day">{dayNames[i]}</p>
+        <Content />
+      </div>
+    ))}
+  </div>
+  <div class="til-card-footer">
+    <a href="/til-rss.xml" class="til-rss-link">RSS</a>
+  </div>
+</aside>
+
+<script>
+  const entries = document.querySelectorAll<HTMLElement>(".til-entry")
+  const dateEl = document.getElementById("til-date")
+  const newerBtn = document.getElementById("til-newer") as HTMLButtonElement
+  const olderBtn = document.getElementById("til-older") as HTMLButtonElement
+
+  let current = 0
+
+  function show(index: number) {
+    entries[current].hidden = true
+    entries[index].hidden = false
+    current = index
+
+    const date = entries[current].dataset.date ?? ""
+    if (dateEl) {
+      dateEl.textContent = date
+      dateEl.setAttribute("datetime", date)
+    }
+
+    newerBtn.disabled = current === 0
+    olderBtn.disabled = current === entries.length - 1
+  }
+
+  newerBtn.addEventListener("click", () => show(current - 1))
+  olderBtn.addEventListener("click", () => show(current + 1))
+</script>
+
+<style>
+  .til-card {
+    border: 1px solid rgb(var(--gray-light));
+    border-radius: 8px;
+    padding: 1.25em 1.5em;
+    box-shadow: var(--box-shadow);
+    margin: 1.5em 0;
+  }
+
+  .til-card-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 0.75em;
+    padding-bottom: 0.75em;
+    border-bottom: 1px solid rgb(var(--gray-light));
+  }
+
+  .til-label {
+    font-weight: 700;
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .til-controls {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75em;
+  }
+
+  time {
+    font-size: 0.85em;
+    color: rgb(var(--gray));
+  }
+
+  .til-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.85em;
+    color: rgb(var(--gray-dark));
+    line-height: 1;
+  }
+
+  .til-controls button:hover:not(:disabled) {
+    color: var(--accent);
+  }
+
+  .til-controls button:disabled {
+    color: rgb(var(--gray-light));
+    cursor: default;
+  }
+
+  .til-entries {
+    font-size: 0.95em;
+    line-height: 1.6;
+    color: rgb(var(--gray-dark));
+  }
+
+  .til-entries :global(p) {
+    margin: 0;
+  }
+
+  .til-entries :global(.til-day) {
+    font-size: 0.8em;
+    color: rgb(var(--gray));
+    margin: 0 0 0.4em 0;
+  }
+
+  .til-card-footer {
+    margin-top: 0.75em;
+    padding-top: 0.75em;
+    border-top: 1px solid rgb(var(--gray-light));
+  }
+
+  .til-rss-link {
+    font-size: 0.8em;
+    color: rgb(var(--gray));
+    text-decoration: none;
+  }
+
+  .til-rss-link:hover {
+    color: rgb(var(--gray-dark));
+  }
+</style>

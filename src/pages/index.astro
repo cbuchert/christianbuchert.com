@@ -1,19 +1,21 @@
 ---
-import BaseLayout from "../layouts/base.astro";
+import BaseLayout from "@/components/layouts/base.astro"
+import LatestTil from "@/components/molecules/latest-til.astro"
 ---
 
-<BaseLayout title="Home" description="It's me, Chris.">
-  <h1>Heyyyyyy</h1>
+<BaseLayout title="Home" description="Product engineer. I build things on the web.">
+  <h1>Chris Buchert</h1>
+  <h5>Cautious Yet Optimistic Android.</h5>
+  <LatestTil />
   <p>
-    It's me, Chris.
+    I build products. Mostly web, some mobile, usually TypeScript. I care about the whole thing: the problem, the design, the code, the delivery.
   </p>
   <p>
-    I'm an dev that likes product and UX, currently based in Utah, USA (America / Denver Time).
+    Based in Utah. Working on some things. Occasionally writing about them.
   </p>
   <p>
-    I build web and mobile apps, mostly in TypeScript, mostly using React.
+    In the area and want to grab lunch sometime? <a target="_blank" href="https://www.linkedin.com/in/christianbuchert/">Find me on LinkedIn</a>.
   </p>
-
   <script>
     // eslint-disable-next-line no-console
     console.log(":chef-kiss So clean.")

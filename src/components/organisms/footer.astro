@@ -1,0 +1,41 @@
+---
+import Copyright from "@/components/atoms/copyright.astro"
+import FooterQuip from "@/components/atoms/footer-quip.astro"
+import GithubLink from "@/components/atoms/github-link.astro"
+import LinkedinLink from "@/components/atoms/linkedin-link.astro"
+import RssLink from "@/components/atoms/rss-link.astro"
+---
+
+<footer>
+  <div class="container">
+    <Copyright /> <FooterQuip />
+
+    <div class="social-links">
+      <RssLink />
+      <LinkedinLink />
+      <GithubLink />
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    padding: 2em 1em 6em 1em;
+    background: linear-gradient(var(--gray-gradient)) no-repeat;
+    color: rgb(var(--gray));
+    text-align: center;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .social-links :global(a) {
+    text-decoration: none;
+    color: rgb(var(--gray));
+  }
+  .social-links :global(a:hover) {
+    color: rgb(var(--gray-dark));
+  }
+</style>

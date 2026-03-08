@@ -1,19 +1,33 @@
 ---
-import BaseLayout from "../layouts/base.astro";
+import { getCollection } from "astro:content"
+import BaseLayout from "@/components/layouts/base.astro"
+import ProjectCard from "@/components/molecules/project-card.astro"
+
+const projects = (await getCollection("projects")).sort((a, b) =>
+  a.data.title.localeCompare(b.data.title)
+)
 ---
 
 <BaseLayout title="Side Projects" description="Stretchy pants in your room for fun">
   <h1>Side Projects</h1>
   <h5>Stretchy pants in your room for fun</h5>
-  <p>
-    Here are some things I've built over the years
-  </p>
-
-  <p>
-    <a target="_blank" href="https://aci-lch.christianbuchert.com/">ACI in LCH</a> - LCH projection of AutoCAD pens.
-  </p>
-
-  <p>
-    <a target="_blank" href="https://keybud.io/">Keybud</a> - A tool to help identify browser keyboard shortcuts.
-  </p>
+  <p>Here are some things I've built over the years.</p>
+  <ul>
+    {projects.map(project => (
+      <li>
+        <ProjectCard entry={project} />
+      </li>
+    ))}
+  </ul>
 </BaseLayout>
+
+<style>
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5em;
+  }
+</style>

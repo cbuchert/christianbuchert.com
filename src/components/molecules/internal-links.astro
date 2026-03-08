@@ -1,0 +1,28 @@
+---
+import HeaderLink from "@/components/atoms/header-link.astro"
+---
+
+<div class="internal-links">
+  <HeaderLink href="/technical-blog">Technical Blog</HeaderLink>
+  <HeaderLink href="/projects">Side Projects</HeaderLink>
+  <HeaderLink href="/about">About</HeaderLink>
+</div>
+
+<style>
+  .internal-links {
+    display: flex;
+    gap: 0.25em;
+  }
+
+  .internal-links :global(a) {
+    padding: 1em 0.5em;
+    color: rgb(var(--black));
+    border-bottom: 4px solid transparent;
+    text-decoration: none;
+  }
+
+  .internal-links :global(a.active) {
+    text-decoration: none;
+    border-bottom-color: var(--accent);
+  }
+</style>
