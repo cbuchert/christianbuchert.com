@@ -10,9 +10,13 @@ const sorted = entries.sort((a, b) =>
 
 const rendered = await Promise.all(sorted.map(entry => render(entry)))
 
-const dayNames = sorted.map(entry =>
-  new Date(entry.id).toLocaleDateString("en-GB", { weekday: "long", timeZone: "UTC" }),
-)
+const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+
+const dayLabels = sorted.map((entry) => {
+  const [year, month, day] = entry.id.split("-").map(Number)
+  const weekday = WEEKDAYS[new Date(Date.UTC(year, month - 1, day)).getUTCDay()]
+  return `${weekday} ${day}`
+})
 
 const entryDates = new Set(sorted.map(e => e.id))
 const initialDate = sorted[0]?.id ?? ""
@@ -34,7 +38,7 @@ const initialDate = sorted[0]?.id ?? ""
   <div class="til-entries">
     {rendered.map(({ Content }, i) => (
       <div class="til-entry" data-date={sorted[i].id} hidden={i !== 0}>
-        <p class="til-day">{dayNames[i]}</p>
+        <p class="til-day">{dayLabels[i]}</p>
         <Content />
       </div>
     ))}
