@@ -1,0 +1,184 @@
+---
+interface Cell {
+  isPad: boolean
+  date: string | null
+  hasEntry: boolean
+  isFuture: boolean
+}
+
+interface Props {
+  entryDates: Set<string>
+  initialDate: string
+  monthsToShow?: number
+}
+
+const { entryDates, initialDate, monthsToShow = 5 } = Astro.props
+
+const todayStr = new Date().toISOString().slice(0, 10)
+const now = new Date()
+
+const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
+  const d = new Date(now.getFullYear(), now.getMonth() - (monthsToShow - 1 - i), 1)
+  const year = d.getFullYear()
+  const month = d.getMonth()
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  // Monday-first offset: Mon=0 … Sun=6
+  const mondayOffset = (new Date(year, month, 1).getDay() + 6) % 7
+
+  const cells: Cell[] = []
+
+  for (let i = 0; i < mondayOffset; i++) {
+    cells.push({ isPad: true, date: null, hasEntry: false, isFuture: false })
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+    cells.push({
+      isPad: false,
+      date: dateStr,
+      hasEntry: entryDates.has(dateStr),
+      isFuture: dateStr > todayStr,
+    })
+  }
+  // Pad to 42 cells so every month occupies exactly 6 rows
+  while (cells.length < 42) {
+    cells.push({ isPad: true, date: null, hasEntry: false, isFuture: false })
+  }
+
+  const label = d.toLocaleDateString("en-GB", { month: "short", year: "numeric" })
+  return { label, cells }
+})
+---
+
+<div class="til-tracker" aria-hidden="true">
+  {trackerMonths.map(({ label, cells }) => (
+    <div class="tracker-month">
+      <div class="tracker-month-label">{label}</div>
+      <div class="tracker-grid">
+        {["M","T","W","T","F","S","S"].map(d => (
+          <div class="tracker-day-header">{d}</div>
+        ))}
+        {cells.map(cell => (
+          <div
+            class:list={[
+              "tracker-cell",
+              cell.isPad && "tracker-cell--pad",
+              !cell.isPad && !cell.hasEntry && !cell.isFuture && "tracker-cell--empty",
+              cell.hasEntry && "tracker-cell--has-entry",
+              cell.isFuture && "tracker-cell--future",
+              cell.date === initialDate && "tracker-cell--active",
+            ]}
+            data-date={cell.date ?? undefined}
+          ></div>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  /*
+   * Each month block is 109px wide (7 × 13px cells + 6 × 3px gaps).
+   * Desktop content width is fixed at 660px (720px container − 60px card padding).
+   * Mobile content width is viewport − 90px (container + card padding at 18px font).
+   *
+   * 5 months: 645px → viewport ≥ 745px  (desktop default)
+   * 4 months: 511px → viewport ≥ 601px
+   * 3 months: 373px → viewport ≥ 463px
+   * 2 months: 241px → viewport ≥ 331px
+   * 1 month:  109px → any remaining width
+   */
+  .til-tracker {
+    display: flex;
+    justify-content: center;
+    gap: 1.25em;
+    overflow: hidden;
+    margin-bottom: 0.75em;
+  }
+
+  .tracker-month {
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 744px) {
+    .tracker-month:first-child {
+      display: none;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .tracker-month:nth-child(-n+2) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 462px) {
+    .tracker-month:nth-child(-n+3) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 330px) {
+    .tracker-month:nth-child(-n+4) {
+      display: none;
+    }
+  }
+
+  .tracker-month-label {
+    font-size: 0.65em;
+    color: rgb(var(--gray));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 13px);
+    gap: 3px;
+  }
+
+  .tracker-day-header {
+    width: 13px;
+    height: 13px;
+    font-size: 7px;
+    color: rgb(var(--gray));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tracker-cell {
+    width: 13px;
+    height: 13px;
+    border-radius: 2px;
+  }
+
+  .tracker-cell--pad {
+    background: transparent;
+  }
+
+  .tracker-cell--empty {
+    background: rgb(var(--gray-light));
+  }
+
+  .tracker-cell--future {
+    background: rgb(var(--gray-light));
+    opacity: 0.4;
+  }
+
+  .tracker-cell--has-entry {
+    background: rgba(35, 55, 255, 0.35);
+    cursor: pointer;
+    transition: transform 0.1s ease, background 0.1s ease;
+  }
+
+  .tracker-cell--has-entry:hover {
+    background: rgba(35, 55, 255, 0.6);
+    transform: scale(1.25);
+  }
+
+  .tracker-cell--active {
+    background: var(--accent) !important;
+    box-shadow: 0 0 0 1.5px var(--accent-dark);
+  }
+</style>
