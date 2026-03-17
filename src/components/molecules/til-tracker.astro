@@ -78,14 +78,14 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
 <style>
   /*
    * Each month block is 109px wide (7 × 13px cells + 6 × 3px gaps).
-   * Desktop content width is fixed at 660px (720px container − 60px card padding).
    * Mobile content width is viewport − 90px (container + card padding at 18px font).
+   * Desktop content width is fixed at 660px (720px container − 60px card padding).
    *
-   * 5 months: 645px → viewport ≥ 745px  (desktop default)
-   * 4 months: 511px → viewport ≥ 601px
-   * 3 months: 373px → viewport ≥ 463px
+   * 1 month:  109px → any width   (base)
    * 2 months: 241px → viewport ≥ 331px
-   * 1 month:  109px → any remaining width
+   * 3 months: 373px → viewport ≥ 463px
+   * 4 months: 511px → viewport ≥ 601px
+   * 5 months: 645px → viewport ≥ 745px
    */
   .til-tracker {
     display: flex;
@@ -98,27 +98,32 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     flex-shrink: 0;
   }
 
-  @media (max-width: 744px) {
-    .tracker-month:first-child {
-      display: none;
+  /* Base: show only the newest month */
+  .tracker-month:nth-child(-n+4) {
+    display: none;
+  }
+
+  @media (min-width: 331px) {
+    .tracker-month:nth-child(4) {
+      display: block;
     }
   }
 
-  @media (max-width: 600px) {
-    .tracker-month:nth-child(-n+2) {
-      display: none;
+  @media (min-width: 463px) {
+    .tracker-month:nth-child(3) {
+      display: block;
     }
   }
 
-  @media (max-width: 462px) {
-    .tracker-month:nth-child(-n+3) {
-      display: none;
+  @media (min-width: 601px) {
+    .tracker-month:nth-child(2) {
+      display: block;
     }
   }
 
-  @media (max-width: 330px) {
-    .tracker-month:nth-child(-n+4) {
-      display: none;
+  @media (min-width: 745px) {
+    .tracker-month:nth-child(1) {
+      display: block;
     }
   }
 

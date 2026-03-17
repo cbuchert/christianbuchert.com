@@ -112,16 +112,17 @@ const initialDate = sorted[0]?.id ?? ""
 
   .til-card-header-top {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1em;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4em;
   }
 
-  @media (max-width: 600px) {
+  @media (min-width: 601px) {
     .til-card-header-top {
-      flex-direction: column;
-      align-items: center;
-      gap: 0.4em;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1em;
     }
   }
 
