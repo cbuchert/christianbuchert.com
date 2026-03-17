@@ -20,15 +20,16 @@ const initialDate = sorted[0]?.id ?? ""
 
 <aside class="til-card">
   <div class="til-card-header">
-    <span class="til-label">Today I Learned</span>
-    <div class="til-controls">
-      <button id="til-older" aria-label="Older entry" disabled={sorted.length <= 1}>← Older</button>
-      <time id="til-date" datetime={sorted[0].id}>{sorted[0].id}</time>
-      <button id="til-newer" aria-label="Newer entry" disabled>Newer →</button>
+    <div class="til-card-header-top">
+      <span class="til-label">Today I Learned</span>
+      <div class="til-controls">
+        <button id="til-older" aria-label="Older entry" disabled={sorted.length <= 1}>← Older</button>
+        <time id="til-date" datetime={sorted[0].id}>{sorted[0].id}</time>
+        <button id="til-newer" aria-label="Newer entry" disabled>Newer →</button>
+      </div>
     </div>
+    <TilTracker entryDates={entryDates} initialDate={initialDate} />
   </div>
-
-  <TilTracker entryDates={entryDates} initialDate={initialDate} />
 
   <div class="til-entries">
     {rendered.map(({ Content }, i) => (
@@ -102,12 +103,25 @@ const initialDate = sorted[0]?.id ?? ""
 
   .til-card-header {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1em;
+    flex-direction: column;
+    gap: 0.75em;
     margin-bottom: 0.75em;
     padding-bottom: 0.75em;
     border-bottom: 1px solid rgb(var(--gray-light));
+  }
+
+  .til-card-header-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  @media (max-width: 400px) {
+    .til-card-header-top {
+      flex-direction: column;
+      gap: 0.4em;
+    }
   }
 
   .til-label {

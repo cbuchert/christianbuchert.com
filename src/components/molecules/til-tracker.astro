@@ -54,7 +54,7 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     <div class="tracker-month">
       <div class="tracker-month-label">{label}</div>
       <div class="tracker-grid">
-        {["M","T","W","T","F","S","S"].map(d => (
+        {["M", "T", "W", "T", "F", "S", "S"].map(d => (
           <div class="tracker-day-header">{d}</div>
         ))}
         {cells.map(cell => (
@@ -92,7 +92,6 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     justify-content: center;
     gap: 1.25em;
     overflow: hidden;
-    margin-bottom: 0.75em;
   }
 
   .tracker-month {
