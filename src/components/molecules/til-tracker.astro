@@ -155,8 +155,9 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     transform: scale(1.25);
   }
 
-  .tracker-cell--active {
-    background: var(--accent) !important;
+  .tracker-cell--active,
+  .tracker-cell--has-entry.tracker-cell--active {
+    background: var(--accent);
     box-shadow: 0 0 0 0.09375rem var(--accent-dark);
   }
 </style>

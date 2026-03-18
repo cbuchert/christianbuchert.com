@@ -31,13 +31,13 @@ const { Content } = await render(entry)
   .project-card {
     display: flex;
     flex-direction: column;
-    gap: 0.75em;
+    gap: 0.75rem;
   }
 
   .screenshot-link img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 0.5rem;
     box-shadow: var(--box-shadow);
     transition: opacity 0.2s ease;
   }
@@ -49,19 +49,19 @@ const { Content } = await render(entry)
   .project-info {
     display: flex;
     flex-direction: column;
-    gap: 0.15em;
+    gap: 0.15rem;
   }
 
   h3 {
     margin: 0;
-    font-size: 1.25em;
+    font-size: 1.25rem;
   }
 
   h3 a {
     color: rgb(var(--black));
     text-decoration: underline;
     text-decoration-color: rgb(var(--gray-light));
-    text-underline-offset: 3px;
+    text-underline-offset: 0.1875rem;
   }
 
   h3 a:hover {
@@ -76,12 +76,12 @@ const { Content } = await render(entry)
   }
 
   .project-description {
-    font-size: 0.9em;
+    font-size: 0.9rem;
     color: rgb(var(--gray-dark));
   }
 
   .project-description :global(p) {
-    margin: 0 0 0.75em 0;
+    margin: 0 0 0.75rem 0;
   }
 
   .project-description :global(p:last-child) {

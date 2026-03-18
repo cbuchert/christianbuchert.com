@@ -12,7 +12,7 @@ const posts = (await getCollection("blog")).sort(
 <BaseLayout title="Technical Blog" description="Because I like to write about technical stuff">
   <style>
       main {
-        width: 960px;
+        width: 60rem;
       }
       ul {
         display: flex;
@@ -42,7 +42,7 @@ const posts = (await getCollection("blog")).sort(
       }
       ul li img {
         margin-bottom: 0.5rem;
-        border-radius: 12px;
+        border-radius: 0.75rem;
       }
       ul li a {
         display: block;
@@ -63,9 +63,9 @@ const posts = (await getCollection("blog")).sort(
       ul a:hover img {
         box-shadow: var(--box-shadow);
       }
-      @media (max-width: 720px) {
+      @media (max-width: 45rem) {
         ul {
-          gap: 0.5em;
+          gap: 0.5rem;
         }
         ul li {
           width: 100%;
@@ -75,7 +75,7 @@ const posts = (await getCollection("blog")).sort(
           margin-bottom: 0;
         }
         ul li:first-child .title {
-          font-size: 1.563em;
+          font-size: 1.563rem;
         }
       }
   </style>

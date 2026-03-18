@@ -2,7 +2,7 @@
   The CSS in this style tag is based off of Bear Blog's default CSS.
   https://github.com/HermanMartinus/bearblog/blob/297026a877bc2ab2b3bdfbd6b9f7961c350917dd/templates/styles/blog/default.css
   License MIT: https://github.com/HermanMartinus/bearblog/blob/master/LICENSE.md
- */
+*/
 
 html {
   font-size: 16px;
@@ -16,7 +16,7 @@ html {
   --gray-light: 229, 233, 240;
   --gray-dark: 34, 41, 57;
   --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow: 0 2px 6px rgba(var(--gray), 25%), 0 8px 24px rgba(var(--gray), 33%), 0 16px 32px rgba(var(--gray), 33%);
+  --box-shadow: 0 0.125rem 0.375rem rgba(var(--gray), 25%), 0 0.5rem 1.5rem rgba(var(--gray), 33%), 0 1rem 2rem rgba(var(--gray), 33%);
 }
 @font-face {
   font-family: "Atkinson";
@@ -38,21 +38,21 @@ body {
   padding: 0;
   text-align: left;
   background: linear-gradient(var(--gray-gradient)) no-repeat;
-  background-size: 100% 600px;
+  background-size: 100% 37.5rem;
   word-wrap: break-word;
   overflow-wrap: break-word;
   color: rgb(var(--gray-dark));
-  font-size: 20px;
+  font-size: 1.25rem;
   line-height: 1.7;
 }
 .container {
-  width: 720px;
-  max-width: calc(100% - 2em);
+  width: 45rem;
+  max-width: calc(100% - 2rem);
   margin: 0 auto;
 }
 
 main {
-  padding: 3em 1em;
+  padding: 3rem 1rem;
 }
 h1,
 h2,
@@ -65,19 +65,19 @@ h6 {
   line-height: 1.2;
 }
 h1 {
-  font-size: 3.052em;
+  font-size: 3.052rem;
 }
 h2 {
-  font-size: 2.441em;
+  font-size: 2.441rem;
 }
 h3 {
-  font-size: 1.953em;
+  font-size: 1.953rem;
 }
 h4 {
-  font-size: 1.563em;
+  font-size: 1.563rem;
 }
 h5 {
-  font-size: 1.25em;
+  font-size: 1.25rem;
 }
 strong,
 b {
@@ -90,17 +90,17 @@ a:hover {
   color: var(--accent);
 }
 p {
-  margin-bottom: 1em;
+  margin-bottom: 1rem;
 }
 .prose p {
-  margin-bottom: 2em;
+  margin-bottom: 2rem;
 }
 textarea {
   width: 100%;
-  font-size: 16px;
+  font-size: 1rem;
 }
 input {
-  font-size: 16px;
+  font-size: 1rem;
 }
 table {
   width: 100%;
@@ -108,36 +108,36 @@ table {
 img {
   max-width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 code {
-  padding: 2px 5px;
+  padding: 0.125rem 0.3125rem;
   background-color: rgb(var(--gray-light));
-  border-radius: 2px;
+  border-radius: 0.125rem;
 }
 pre {
-  padding: 1.5em;
-  border-radius: 8px;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
 }
 pre > code {
   all: unset;
 }
 blockquote {
-  border-left: 4px solid var(--accent);
-  padding: 0 0 0 20px;
-  margin: 0px;
-  font-size: 1.333em;
+  border-left: 0.25rem solid var(--accent);
+  padding: 0 0 0 1.25rem;
+  margin: 0;
+  font-size: 1.333rem;
 }
 hr {
   border: none;
-  border-top: 1px solid rgb(var(--gray-light));
+  border-top: 0.0625rem solid rgb(var(--gray-light));
 }
-@media (max-width: 720px) {
+@media (max-width: 45rem) {
   body {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
   main {
-    padding: 1em;
+    padding: 1rem;
   }
 }
 
@@ -145,7 +145,7 @@ hr {
   border: 0;
   padding: 0;
   margin: 0;
-  position: absolute !important;
+  position: absolute;
   height: 1px;
   width: 1px;
   overflow: hidden;
