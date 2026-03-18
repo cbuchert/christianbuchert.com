@@ -8,4 +8,9 @@ import { defineConfig } from "astro/config"
 export default defineConfig({
   site: "https://christianbuchert.com",
   integrations: [mdx(), sitemap()],
+  markdown: {
+    shikiConfig: {
+      theme: "css-variables",
+    },
+  },
 })
