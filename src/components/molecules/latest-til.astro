@@ -159,7 +159,7 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   // Shiki puts data-language="mermaid" on the <pre>; textContent collects
   // the raw diagram source across all the <span class="line"> wrappers.
   const mermaidPres = document.querySelectorAll<HTMLElement>(
-    '.til-entries pre[data-language="mermaid"]',
+    ".til-entries pre[data-language=\"mermaid\"]",
   )
   if (mermaidPres.length > 0) {
     const loadMermaid = async () => {
