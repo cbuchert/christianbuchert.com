@@ -45,13 +45,14 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
   }
 
   const label = d.toLocaleDateString("en-GB", { month: "short", year: "numeric" })
-  return { label, cells }
+  const yearMonth = `${year}-${String(month + 1).padStart(2, "0")}`
+  return { label, yearMonth, cells }
 })
 ---
 
 <div class="til-tracker" aria-hidden="true">
-  {trackerMonths.map(({ label, cells }) => (
-    <div class="tracker-month">
+  {trackerMonths.map(({ label, yearMonth, cells }) => (
+    <div class="tracker-month" data-year-month={yearMonth}>
       <div class="tracker-month-label">{label}</div>
       <div class="tracker-grid">
         {["M", "T", "W", "T", "F", "S", "S"].map(d => (
@@ -98,34 +99,7 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     flex-shrink: 0;
   }
 
-  /* Base: show only the newest month */
-  .tracker-month:nth-child(-n+4) {
-    display: none;
-  }
-
-  @media (min-width: 331px) {
-    .tracker-month:nth-child(4) {
-      display: block;
-    }
-  }
-
-  @media (min-width: 463px) {
-    .tracker-month:nth-child(3) {
-      display: block;
-    }
-  }
-
-  @media (min-width: 601px) {
-    .tracker-month:nth-child(2) {
-      display: block;
-    }
-  }
-
-  @media (min-width: 745px) {
-    .tracker-month:nth-child(1) {
-      display: block;
-    }
-  }
+  /* Month visibility is controlled entirely by JS (updateTrackerWindow) */
 
   .tracker-month-label {
     font-size: 0.65em;

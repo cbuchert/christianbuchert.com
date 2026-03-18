@@ -54,8 +54,47 @@ const initialDate = sorted[0]?.id ?? ""
   const newerBtn = document.getElementById("til-newer") as HTMLButtonElement
   const olderBtn = document.getElementById("til-older") as HTMLButtonElement
   const trackerCells = document.querySelectorAll<HTMLElement>(".tracker-cell[data-date]")
+  const trackerMonthEls = Array.from(document.querySelectorAll<HTMLElement>(".tracker-month"))
 
   let current = 0
+
+  function getVisibleMonthCount(): number {
+    const w = window.innerWidth
+    if (w >= 745) {
+      return 5
+    }
+    if (w >= 601) {
+      return 4
+    }
+    if (w >= 463) {
+      return 3
+    }
+    if (w >= 331) {
+      return 2
+    }
+    return 1
+  }
+
+  function updateTrackerWindow(date: string) {
+    if (!trackerMonthEls.length) {
+      return
+    }
+
+    const yearMonth = date.slice(0, 7)
+    let activeIdx = trackerMonthEls.findIndex(m => m.dataset.yearMonth === yearMonth)
+    if (activeIdx === -1) {
+      activeIdx = trackerMonthEls.length - 1
+    }
+
+    const count = getVisibleMonthCount()
+    let start = Math.round(activeIdx - (count - 1) / 2)
+    start = Math.max(0, Math.min(start, trackerMonthEls.length - count))
+    const end = start + count
+
+    trackerMonthEls.forEach((m, i) => {
+      m.style.display = i >= start && i < end ? "block" : "none"
+    })
+  }
 
   function highlightDate(date: string) {
     trackerCells.forEach((cell) => {
@@ -78,6 +117,7 @@ const initialDate = sorted[0]?.id ?? ""
     olderBtn.disabled = current === entries.length - 1
 
     highlightDate(date)
+    updateTrackerWindow(date)
   }
 
   newerBtn.addEventListener("click", () => show(current - 1))
@@ -93,6 +133,17 @@ const initialDate = sorted[0]?.id ?? ""
         }
       })
     }
+  })
+
+  // Initialise tracker window and recalculate on resize
+  updateTrackerWindow(entries[0]?.dataset.date ?? "")
+
+  let resizeTimer: ReturnType<typeof setTimeout>
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimer)
+    resizeTimer = setTimeout(() => {
+      updateTrackerWindow(entries[current]?.dataset.date ?? "")
+    }, 100)
   })
 </script>
 
