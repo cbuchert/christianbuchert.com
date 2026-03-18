@@ -22,12 +22,12 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
   const year = d.getFullYear()
   const month = d.getMonth()
   const daysInMonth = new Date(year, month + 1, 0).getDate()
-  // Monday-first offset: Mon=0 … Sun=6
-  const mondayOffset = (new Date(year, month, 1).getDay() + 6) % 7
+  // Sunday-first offset: Sun=0 … Sat=6
+  const sundayOffset = new Date(year, month, 1).getDay()
 
   const cells: Cell[] = []
 
-  for (let i = 0; i < mondayOffset; i++) {
+  for (let i = 0; i < sundayOffset; i++) {
     cells.push({ isPad: true, date: null, hasEntry: false, isFuture: false })
   }
   for (let day = 1; day <= daysInMonth; day++) {
@@ -55,7 +55,7 @@ const trackerMonths = Array.from({ length: monthsToShow }, (_, i) => {
     <div class="tracker-month" data-year-month={yearMonth}>
       <div class="tracker-month-label">{label}</div>
       <div class="tracker-grid">
-        {["M", "T", "W", "T", "F", "S", "S"].map(d => (
+        {["S", "M", "T", "W", "T", "F", "S"].map(d => (
           <div class="tracker-day-header">{d}</div>
         ))}
         {cells.map(cell => (

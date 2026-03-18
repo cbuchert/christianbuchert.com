@@ -154,6 +154,42 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   window.addEventListener("resize", () => {
     updateTrackerWindow(entries[current]?.dataset.date ?? "")
   })
+
+  // Mermaid — lazy-loaded only when diagrams are present.
+  // Shiki puts data-language="mermaid" on the <pre>; textContent collects
+  // the raw diagram source across all the <span class="line"> wrappers.
+  const mermaidPres = document.querySelectorAll<HTMLElement>(
+    '.til-entries pre[data-language="mermaid"]',
+  )
+  if (mermaidPres.length > 0) {
+    const loadMermaid = async () => {
+      const { default: mermaid } = await import("mermaid")
+      mermaid.initialize({ startOnLoad: false, theme: "neutral" })
+
+      let counter = 0
+      for (const pre of mermaidPres) {
+        const diagram = pre.textContent ?? ""
+        const id = `til-mermaid-${counter++}`
+        try {
+          const { svg } = await mermaid.render(id, diagram)
+          const wrapper = document.createElement("div")
+          wrapper.className = "til-mermaid"
+          wrapper.innerHTML = svg
+          pre.replaceWith(wrapper)
+        }
+        catch {
+          // leave the raw code block in place if a diagram fails to parse
+        }
+      }
+    }
+
+    if (typeof requestIdleCallback !== "undefined") {
+      requestIdleCallback(loadMermaid)
+    }
+    else {
+      setTimeout(loadMermaid, 200)
+    }
+  }
 </script>
 
 <style>
@@ -241,6 +277,23 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
     font-size: 0.8rem;
     color: rgb(var(--gray));
     margin: 0 0 0.4rem 0;
+  }
+
+  .til-entries :global(pre) {
+    font-size: 0.8rem;
+    margin: 0.75rem 0 0;
+    line-height: 1.5;
+  }
+
+  .til-entries :global(.til-mermaid) {
+    margin: 0.75rem 0 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  .til-entries :global(.til-mermaid svg) {
+    max-width: 100%;
+    height: auto;
   }
 
   .til-card-footer {
