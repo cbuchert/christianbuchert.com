@@ -21,13 +21,17 @@ const dayLabels = sorted.map((entry) => {
 const entryDates = new Set(sorted.map(e => e.id))
 const initialDate = sorted[0]?.id ?? ""
 
-// Cover every entry's month plus the remainder of the current month
+// Cover every entry's month, then round up to the nearest multiple of the
+// max visible count (5) so mod paging always produces clean, non-overlapping
+// pages at every viewport size. Extra months render as empty gray cells.
+const MAX_VISIBLE = 5
 const now = new Date()
 const oldestId = sorted[sorted.length - 1]?.id ?? "1970-01-01"
 const oldestDate = new Date(`${oldestId}T00:00:00Z`)
-const monthsToShow = (now.getFullYear() - oldestDate.getFullYear()) * 12
+const rawMonthsNeeded = (now.getFullYear() - oldestDate.getFullYear()) * 12
   + (now.getMonth() - oldestDate.getMonth())
   + 1
+const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
 ---
 
 <aside class="til-card">
