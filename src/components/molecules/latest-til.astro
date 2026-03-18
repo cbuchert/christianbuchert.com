@@ -20,6 +20,14 @@ const dayLabels = sorted.map((entry) => {
 
 const entryDates = new Set(sorted.map(e => e.id))
 const initialDate = sorted[0]?.id ?? ""
+
+// Cover every entry's month plus the remainder of the current month
+const now = new Date()
+const oldestId = sorted[sorted.length - 1]?.id ?? "1970-01-01"
+const oldestDate = new Date(`${oldestId}T00:00:00Z`)
+const monthsToShow = (now.getFullYear() - oldestDate.getFullYear()) * 12
+  + (now.getMonth() - oldestDate.getMonth())
+  + 1
 ---
 
 <aside class="til-card">
@@ -32,7 +40,7 @@ const initialDate = sorted[0]?.id ?? ""
         <button id="til-newer" aria-label="Newer entry" disabled>Newer →</button>
       </div>
     </div>
-    <TilTracker entryDates={entryDates} initialDate={initialDate} />
+    <TilTracker entryDates={entryDates} initialDate={initialDate} monthsToShow={monthsToShow} />
   </div>
 
   <div class="til-entries">
