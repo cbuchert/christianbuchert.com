@@ -87,8 +87,9 @@ const initialDate = sorted[0]?.id ?? ""
     }
 
     const count = getVisibleMonthCount()
-    let start = Math.round(activeIdx - (count - 1) / 2)
-    start = Math.max(0, Math.min(start, trackerMonthEls.length - count))
+    let start = activeIdx - (activeIdx % count)
+    start = Math.min(start, trackerMonthEls.length - count)
+    start = Math.max(0, start)
     const end = start + count
 
     trackerMonthEls.forEach((m, i) => {
