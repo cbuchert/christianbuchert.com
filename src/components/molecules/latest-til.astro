@@ -151,12 +151,8 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   // Initialise tracker window and recalculate on resize
   updateTrackerWindow(entries[0]?.dataset.date ?? "")
 
-  let resizeTimer: ReturnType<typeof setTimeout>
   window.addEventListener("resize", () => {
-    clearTimeout(resizeTimer)
-    resizeTimer = setTimeout(() => {
-      updateTrackerWindow(entries[current]?.dataset.date ?? "")
-    }, 100)
+    updateTrackerWindow(entries[current]?.dataset.date ?? "")
   })
 </script>
 
