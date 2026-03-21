@@ -24,31 +24,33 @@ const dateStr = dateAdded.toLocaleDateString("en-US", {
 <li class="link-item" data-tags={JSON.stringify(tags)}>
   <div class="link-header">
     <a href={url} target="_blank" rel="noopener noreferrer" class="link-title">
-      {type && <LinkTypeIcon type={type} />}
       {title}
     </a>
     <div class="link-meta">
-      <a
-        href={archiveUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="archive-link"
-        title="View on Wayback Machine"
-      >
-        <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
-          <path d="M22.667 22.884V24H1.333v-1.116zm-.842-1.675v1.396H2.175v-1.396zM4.233 6.14l.234.118.118 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.332.098H3.062l-.352-.098-.136-2.47-.118-3.646v-2.941l.118-3.078.107-1.892.244-.107zm16.842 0l.235.118.117 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.332.098h-1.171l-.352-.098-.137-2.47-.117-3.646v-2.941l.117-3.078.108-1.892.244-.107zm-11.79 0l.235.118.117 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.331.098H8.114l-.352-.098-.136-2.47-.117-3.646v-2.941l.117-3.078.107-1.892.244-.107zm6.457 0l.234.118.117 1.882.118 3.058v2.941l-.118 3.666-.019 2.47-.332.098H14.57l-.351-.098-.137-2.47-.117-3.646v-2.941l.117-3.078.108-1.892.244-.107zm6.083-2.511V5.58H2.175V3.628zM11.798 0l10.307 2.347-.413.723H1.951l-.618-.587Z"/>
-        </svg>
-        <span class="sr-only">View on Wayback Machine</span>
-      </a>
+      {type !== "video" && type !== "repo" && (
+        <a
+          href={archiveUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="archive-link"
+          title="View on Wayback Machine"
+        >
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" aria-hidden="true">
+            <path d="M22.667 22.884V24H1.333v-1.116zm-.842-1.675v1.396H2.175v-1.396zM4.233 6.14l.234.118.118 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.332.098H3.062l-.352-.098-.136-2.47-.118-3.646v-2.941l.118-3.078.107-1.892.244-.107zm16.842 0l.235.118.117 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.332.098h-1.171l-.352-.098-.137-2.47-.117-3.646v-2.941l.117-3.078.108-1.892.244-.107zm-11.79 0l.235.118.117 1.882.117 3.058v2.941l-.117 3.666-.02 2.47-.331.098H8.114l-.352-.098-.136-2.47-.117-3.646v-2.941l.117-3.078.107-1.892.244-.107zm6.457 0l.234.118.117 1.882.118 3.058v2.941l-.118 3.666-.019 2.47-.332.098H14.57l-.351-.098-.137-2.47-.117-3.646v-2.941l.117-3.078.108-1.892.244-.107zm6.083-2.511V5.58H2.175V3.628zM11.798 0l10.307 2.347-.413.723H1.951l-.618-.587Z" />
+          </svg>
+          <span class="sr-only">View on Wayback Machine</span>
+        </a>
+      )}
       <time class="link-date" datetime={dateAdded.toISOString().slice(0, 10)}>
         {dateStr}
       </time>
     </div>
   </div>
-  {tags.length > 0 && (
+  {(type || tags.length > 0) && (
     <div class="link-tags">
+      {type && <LinkTypeIcon type={type} />}
       {tags.map(tag => (
-        <Badge label={tag} />
+        <Badge>{tag}</Badge>
       ))}
     </div>
   )}
@@ -71,10 +73,17 @@ const dateStr = dateAdded.toLocaleDateString("en-US", {
 
   .link-header {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  @media (min-width: 36rem) {
+    .link-header {
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+    }
   }
 
   .link-title {
@@ -83,9 +92,7 @@ const dateStr = dateAdded.toLocaleDateString("en-US", {
     color: var(--accent);
     text-decoration: none;
     line-height: 1.3;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
+    min-width: 0;
   }
 
   .link-title:hover {
@@ -96,7 +103,6 @@ const dateStr = dateAdded.toLocaleDateString("en-US", {
     font-size: 0.8rem;
     color: rgb(var(--gray));
     white-space: nowrap;
-    flex-shrink: 0;
   }
 
   .link-meta {
