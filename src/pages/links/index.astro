@@ -1,0 +1,114 @@
+---
+import { getCollection } from "astro:content"
+import BaseLayout from "@/components/layouts/base.astro"
+import LinkCard from "@/components/molecules/link-card.astro"
+
+const links = (await getCollection("links")).sort(
+  (a, b) => b.data.dateAdded.getTime() - a.data.dateAdded.getTime(),
+)
+
+const allTags = [...new Set(links.flatMap(link => link.data.tags))].sort()
+---
+
+<BaseLayout title="Links" description="Things worth reading, watching, or using">
+  <h1>Links</h1>
+  <p>Things I've read, watched, or used over the years.</p>
+
+  {allTags.length > 0 && (
+    <div class="tag-filters" role="group" aria-label="Filter by tag">
+      <button class="tag-btn tag-btn--active" data-tag="all">All</button>
+      {allTags.map(tag => (
+        <button class="tag-btn" data-tag={tag}>{tag}</button>
+      ))}
+    </div>
+  )}
+
+  <ul class="links-list">
+    {links.map(link => <LinkCard entry={link} />)}
+  </ul>
+
+  <p id="no-results" hidden>No links found for this tag.</p>
+</BaseLayout>
+
+<script>
+const filterBtns = document.querySelectorAll<HTMLButtonElement>(".tag-btn")
+const linkItems = document.querySelectorAll<HTMLElement>(".link-item")
+const noResults = document.getElementById("no-results")
+
+function filterByTag(tag: string) {
+  filterBtns.forEach((btn) => {
+    btn.classList.toggle("tag-btn--active", btn.dataset.tag === tag)
+  })
+
+  let visibleCount = 0
+  linkItems.forEach((item) => {
+    const tags: string[] = JSON.parse(item.dataset.tags ?? "[]")
+    const visible = tag === "all" || tags.includes(tag)
+    item.hidden = !visible
+    if (visible)
+      visibleCount++
+  })
+
+  if (noResults)
+    noResults.hidden = visibleCount > 0
+}
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener("click", () => filterByTag(btn.dataset.tag ?? "all"))
+})
+</script>
+
+<style>
+  p {
+    color: rgb(var(--gray));
+    margin-bottom: 1.5rem;
+  }
+
+  .tag-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .tag-btn {
+    background: none;
+    border: 0.0625rem solid rgb(var(--gray-light));
+    border-radius: 2rem;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.85rem;
+    font-family: inherit;
+    color: rgb(var(--gray));
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+    line-height: 1.6;
+  }
+
+  .tag-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  .tag-btn--active {
+    background-color: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+
+  .tag-btn--active:hover {
+    color: #fff;
+  }
+
+  .links-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #no-results {
+    color: rgb(var(--gray));
+    font-size: 0.95rem;
+  }
+</style>

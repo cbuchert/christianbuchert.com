@@ -1,0 +1,24 @@
+---
+import { FileText, BookOpen, Play, GitFork } from "@lucide/astro"
+import Badge from "@/components/atoms/badge.astro"
+
+interface Props {
+  type: "blog-post" | "book" | "video" | "repo"
+}
+
+const { type } = Astro.props
+
+const config = {
+  "blog-post": { Icon: FileText, label: "Blog Post" },
+  "book": { Icon: BookOpen, label: "Book" },
+  "video": { Icon: Play, label: "Video" },
+  "repo": { Icon: GitFork, label: "Repo" },
+}
+
+const { Icon, label } = config[type]
+---
+
+<Badge variant="accent">
+  <Icon size={11} aria-hidden="true" />
+  {label}
+</Badge>
