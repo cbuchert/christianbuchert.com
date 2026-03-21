@@ -32,4 +32,15 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { blog, projects, til }
+const links = defineCollection({
+  loader: glob({ base: "./src/content/links", pattern: "**/*.md" }),
+  schema: z.object({
+    title: z.string(),
+    url: z.string().url(),
+    dateAdded: z.coerce.date(),
+    tags: z.array(z.string()).default([]),
+    type: z.enum(["blog-post", "book", "video", "repo"]).optional(),
+  }),
+})
+
+export const collections = { blog, links, projects, til }
