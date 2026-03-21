@@ -1,0 +1,31 @@
+---
+import { FileText, BookOpen, Play, GitFork } from "@lucide/astro"
+
+interface Props {
+  type: "blog-post" | "book" | "video" | "repo"
+}
+
+const { type } = Astro.props
+
+const icons = {
+  "blog-post": FileText,
+  "book": BookOpen,
+  "video": Play,
+  "repo": GitFork,
+}
+
+const Icon = icons[type]
+---
+
+<Icon size={16} aria-hidden="true" class="link-type-icon" />
+
+<style>
+  .link-type-icon {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    top: -0.1em;
+    flex-shrink: 0;
+    color: rgb(var(--gray));
+  }
+</style>
