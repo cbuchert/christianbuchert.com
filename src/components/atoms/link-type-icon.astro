@@ -1,9 +1,9 @@
 ---
-import { FileText, BookOpen, Play, GitFork } from "@lucide/astro"
+import { BookOpen, FileText, GitFork, Globe, Play } from "@lucide/astro"
 import Badge from "@/components/atoms/badge.astro"
 
 interface Props {
-  type: "blog-post" | "book" | "video" | "repo"
+  type: "blog-post" | "book" | "video" | "repo" | "website"
 }
 
 const { type } = Astro.props
@@ -13,6 +13,7 @@ const config = {
   "book": { Icon: BookOpen, label: "Book" },
   "video": { Icon: Play, label: "Video" },
   "repo": { Icon: GitFork, label: "Repo" },
+  "website": { Icon: Globe, label: "Website" },
 }
 
 const { Icon, label } = config[type]
