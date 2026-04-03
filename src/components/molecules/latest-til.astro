@@ -57,6 +57,7 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   </div>
   <div class="til-card-footer">
     <a href="/til-rss.xml" class="til-rss-link" target="_blank">TIL RSS</a>
+    <button id="til-share" class="til-share-btn">Share</button>
   </div>
 </aside>
 
@@ -65,6 +66,7 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   const dateEl = document.getElementById("til-date")
   const newerBtn = document.getElementById("til-newer") as HTMLButtonElement
   const olderBtn = document.getElementById("til-older") as HTMLButtonElement
+  const shareBtn = document.getElementById("til-share") as HTMLButtonElement
   const trackerCells = document.querySelectorAll<HTMLElement>(".tracker-cell[data-date]")
   const trackerMonthEls = Array.from(document.querySelectorAll<HTMLElement>(".tracker-month"))
 
@@ -115,7 +117,7 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
     })
   }
 
-  function show(index: number) {
+  function show(index: number, updateHistory = true) {
     entries[current].hidden = true
     entries[index].hidden = false
     current = index
@@ -131,6 +133,12 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
 
     highlightDate(date)
     updateTrackerWindow(date)
+
+    if (updateHistory && date) {
+      const params = new URLSearchParams(window.location.search)
+      params.set("til", date)
+      history.replaceState(null, "", `${window.location.pathname}?${params.toString()}`)
+    }
   }
 
   newerBtn.addEventListener("click", () => show(current - 1))
@@ -148,8 +156,32 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
     }
   })
 
-  // Initialise tracker window and recalculate on resize
-  updateTrackerWindow(entries[0]?.dataset.date ?? "")
+  // Load entry from ?til= search param, or default to the latest
+  const tilParam = new URLSearchParams(window.location.search).get("til")
+  if (tilParam) {
+    const idx = Array.from(entries).findIndex(e => e.dataset.date === tilParam)
+    if (idx !== -1) {
+      show(idx, false)
+    }
+    else {
+      updateTrackerWindow(entries[0]?.dataset.date ?? "")
+    }
+  }
+  else {
+    updateTrackerWindow(entries[0]?.dataset.date ?? "")
+  }
+
+  shareBtn.addEventListener("click", () => {
+    const date = entries[current].dataset.date ?? ""
+    const url = `https://christianbuchert.com/?til=${date}`
+    navigator.clipboard.writeText(url).then(() => {
+      shareBtn.textContent = "Copied!"
+      setTimeout(() => { shareBtn.textContent = "Share" }, 2000)
+    }).catch(() => {
+      shareBtn.textContent = url
+      setTimeout(() => { shareBtn.textContent = "Share" }, 3000)
+    })
+  })
 
   window.addEventListener("resize", () => {
     updateTrackerWindow(entries[current]?.dataset.date ?? "")
@@ -297,6 +329,9 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   }
 
   .til-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-top: 0.75rem;
     padding-top: 0.75rem;
     border-top: 0.0625rem solid rgb(var(--gray-light));
@@ -309,6 +344,20 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
   }
 
   .til-rss-link:hover {
+    color: rgb(var(--gray-dark));
+  }
+
+  .til-share-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 0.8rem;
+    color: rgb(var(--gray));
+    line-height: 1;
+  }
+
+  .til-share-btn:hover {
     color: rgb(var(--gray-dark));
   }
 </style>
