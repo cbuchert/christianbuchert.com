@@ -16,7 +16,9 @@ html {
   --gray-light: 229, 233, 240;
   --gray-dark: 34, 41, 57;
   --gray-gradient: rgba(var(--gray-light), 50%), #fff;
-  --box-shadow: 0 0.125rem 0.375rem rgba(var(--gray), 25%), 0 0.5rem 1.5rem rgba(var(--gray), 33%), 0 1rem 2rem rgba(var(--gray), 33%);
+  --box-shadow:
+    0 0.125rem 0.375rem rgba(var(--gray), 25%), 0 0.5rem 1.5rem rgba(var(--gray), 33%),
+    0 1rem 2rem rgba(var(--gray), 33%);
 
   /* Shiki syntax highlighting — css-variables theme */
   --astro-code-color-text: rgb(var(--gray-dark));

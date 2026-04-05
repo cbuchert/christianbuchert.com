@@ -4,7 +4,7 @@ import { getCollection } from "astro:content"
 export async function GET(context) {
   const entries = await getCollection("til")
   const sorted = entries.sort((a, b) =>
-    new Date(b.id).getTime() - new Date(a.id).getTime()
+    new Date(b.id).getTime() - new Date(a.id).getTime(),
   )
   return rss({
     title: "Chris Buchert | TIL",

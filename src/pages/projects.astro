@@ -4,7 +4,7 @@ import BaseLayout from "@/components/layouts/base.astro"
 import ProjectCard from "@/components/molecules/project-card.astro"
 
 const projects = (await getCollection("projects")).sort((a, b) =>
-  a.data.title.localeCompare(b.data.title)
+  a.data.title.localeCompare(b.data.title),
 )
 ---
 

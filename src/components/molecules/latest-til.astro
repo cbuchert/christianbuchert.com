@@ -176,10 +176,14 @@ const monthsToShow = Math.ceil(rawMonthsNeeded / MAX_VISIBLE) * MAX_VISIBLE
     const url = `https://christianbuchert.com/?til=${date}`
     navigator.clipboard.writeText(url).then(() => {
       shareBtn.textContent = "Copied!"
-      setTimeout(() => { shareBtn.textContent = "Share" }, 2000)
+      setTimeout(() => {
+        shareBtn.textContent = "Share"
+      }, 2000)
     }).catch(() => {
       shareBtn.textContent = url
-      setTimeout(() => { shareBtn.textContent = "Share" }, 3000)
+      setTimeout(() => {
+        shareBtn.textContent = "Share"
+      }, 3000)
     })
   })
 
