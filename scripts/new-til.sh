@@ -3,7 +3,11 @@ set -e
 
 OFFSET=${1:-0}
 if date -v+0d +%Y-%m-%d >/dev/null 2>&1; then
-  DATE=$(date -v+${OFFSET}d +%Y-%m-%d)
+  if [ "$OFFSET" -ge 0 ]; then
+    DATE=$(date -v+${OFFSET}d +%Y-%m-%d)
+  else
+    DATE=$(date -v${OFFSET}d +%Y-%m-%d)
+  fi
 else
   DATE=$(date -d "${OFFSET} days" +%Y-%m-%d)
 fi
