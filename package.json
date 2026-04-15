@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "astro": "astro",
     "lint:fix": "eslint --fix .",
-    "til": "sh scripts/new-til.sh"
+    "til": "sh scripts/new-til.sh",
+    "link": "sh scripts/new-link.sh"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
