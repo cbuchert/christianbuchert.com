@@ -39,7 +39,7 @@ const links = defineCollection({
     url: z.string().url(),
     dateAdded: z.coerce.date(),
     tags: z.array(z.string()).default([]),
-    type: z.enum(["blog-post", "book", "video", "repo", "website"]).optional(),
+    type: z.enum(["blog-post", "book", "video", "repo", "website", "song"]).optional(),
   }),
 })
 
