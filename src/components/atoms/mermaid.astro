@@ -1,0 +1,26 @@
+---
+interface Props {
+  code: string
+}
+const { code } = Astro.props
+---
+
+<pre class="mermaid">{code}</pre>
+
+<script>
+  // ponytail: mermaid is client-only; Astro bundles + dedupes this module
+  // script, so it runs once no matter how many diagrams are on the page.
+  import mermaid from "mermaid"
+
+  mermaid.initialize({ startOnLoad: false })
+  await mermaid.run()
+</script>
+
+<style>
+  .mermaid {
+    display: flex;
+    justify-content: center;
+    background: none;
+    padding: 0;
+  }
+</style>

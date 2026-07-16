@@ -1,0 +1,12 @@
+graph TD
+  root["pnpm-workspace.yaml"]
+  root --> apps["apps/*"]
+  root --> packages["packages/*"]
+  apps --> web["web"]
+  apps --> api["api"]
+  packages --> db["db (shared client)"]
+  packages --> config["config (shared)"]
+  web --> db
+  api --> db
+  web --> config
+  api --> config
