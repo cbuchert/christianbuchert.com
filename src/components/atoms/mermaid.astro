@@ -201,9 +201,8 @@ const { code } = Astro.props
     touch-action: auto;
   }
 
-  .mermaid-source {
-    overflow-x: auto;
-  }
+  /* No overflow here: the inner <pre> scrolls itself, and a non-visible overflow
+     on this wrapper would clip the code block's drop shadow. */
 
   /* Show one view at a time. */
   .mermaid-figure[data-view="preview"] .mermaid-source {
