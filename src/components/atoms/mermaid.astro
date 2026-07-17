@@ -40,7 +40,21 @@ const { code } = Astro.props
   import panzoom from "panzoom"
 
   mermaid.registerLayoutLoaders(elkLayouts)
-  mermaid.initialize({ startOnLoad: false, layout: "elk" })
+  mermaid.initialize({
+    startOnLoad: false,
+    layout: "elk",
+    theme: "base",
+    themeVariables: {
+      fontFamily: "\"Atkinson\", sans-serif",
+      primaryColor: "#eaf0fb", // card fill (light blue, C4-ish)
+      primaryBorderColor: "#9db4e8",
+      primaryTextColor: "#1f2733", // dark text for readability
+      lineColor: "#9aa3b2",
+      edgeLabelBackground: "#ffffff", // base theme derives an odd green otherwise
+      clusterBkg: "transparent", // boundaries recede
+      clusterBorder: "#c7cdd8",
+    },
+  })
   await mermaid.run()
 
   document.querySelectorAll<HTMLElement>(".mermaid-figure").forEach((figure) => {
@@ -124,6 +138,28 @@ const { code } = Astro.props
   .mermaid {
     background: none;
     overflow: hidden; /* clip the diagram as it pans/zooms within the frame */
+  }
+
+  /* Recover C4-style card hierarchy: prominent name, muted tech, secondary
+     description. The SVG is JS-created, so target it with :global(). */
+  .mermaid :global(.nodeLabel) {
+    font-size: 0.78rem !important;
+    line-height: 1.4;
+  }
+  .mermaid :global(.nodeLabel strong) {
+    font-size: 1rem !important;
+  }
+  .mermaid :global(.nodeLabel em) {
+    font-style: italic;
+    opacity: 0.6;
+  }
+  /* Boundaries read as dashed containers, not solid boxes. */
+  .mermaid :global(.cluster rect) {
+    stroke-dasharray: 5 4;
+  }
+  .mermaid :global(.cluster-label) {
+    font-weight: 600;
+    opacity: 0.7;
   }
 
   /* .mermaid-viewport is created in JS, so it lacks Astro's scope attribute —
