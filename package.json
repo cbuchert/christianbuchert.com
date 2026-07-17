@@ -17,6 +17,7 @@
     "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^3.7.0",
     "@lucide/astro": "^0.577.0",
+    "@mermaid-js/layout-elk": "^0.2.2",
     "astro": "^5.18.0",
     "mermaid": "^11.13.0",
     "panzoom": "^9.4.4",

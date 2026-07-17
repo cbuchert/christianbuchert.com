@@ -36,9 +36,11 @@ const { code } = Astro.props
   // ponytail: mermaid is client-only; Astro bundles + dedupes this module
   // script, so it runs once no matter how many diagrams are on the page.
   import mermaid from "mermaid"
+  import elkLayouts from "@mermaid-js/layout-elk"
   import panzoom from "panzoom"
 
-  mermaid.initialize({ startOnLoad: false })
+  mermaid.registerLayoutLoaders(elkLayouts)
+  mermaid.initialize({ startOnLoad: false, layout: "elk" })
   await mermaid.run()
 
   document.querySelectorAll<HTMLElement>(".mermaid-figure").forEach((figure) => {
