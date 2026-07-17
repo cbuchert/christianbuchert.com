@@ -5,36 +5,57 @@ flowchart TB
   subgraph monorepo["PNPM Workspace Monorepo"]
     subgraph pkgs["packages/ — shared, not deployed"]
       subgraph config["config/ — shared configuration"]
-        designTokens["`**Design Tokens**
+        designTokens["`_«Component»_
+**Design Tokens**
 Color, spacing, and typography primitives`"]
-        lintConfig["`**Lint Config** · _ESLint / Biome_
+        lintConfig["`_«Component»_
+**Lint Config**
+_[ESLint / Biome]_
 Shared linting and formatting rules`"]
-        testConfig["`**Test Config** · _Vitest / Playwright_
+        testConfig["`_«Component»_
+**Test Config**
+_[Vitest / Playwright]_
 Unit and e2e shared test configuration`"]
-        tsConfig["`**TypeScript Config** · _tsconfig.json_
+        tsConfig["`_«Component»_
+**TypeScript Config**
+_[tsconfig.json]_
 Shared base TS configurations`"]
       end
       subgraph framework["framework/ — framework building blocks"]
-        components["`**Component Library**
+        components["`_«Component»_
+**Component Library**
 Shared UI components`"]
-        designSystem["`**Design System**
+        designSystem["`_«Component»_
+**Design System**
 Themed component compositions`"]
-        i18n["`**i18n** · _i18next_
+        i18n["`_«Component»_
+**i18n**
+_[i18next]_
 Internationalization infrastructure`"]
-        testFramework["`**Test Framework** · _Vitest_
+        testFramework["`_«Component»_
+**Test Framework**
+_[Vitest]_
 Shared test utilities and setup`"]
-        lintInfra["`**Lint Infrastructure** · _ESLint / Biome_
+        lintInfra["`_«Component»_
+**Lint Infrastructure**
+_[ESLint / Biome]_
 Custom lint rules and plugins`"]
       end
       subgraph libs["lib/ — shared library functions"]
-        logging["`**Logging** · _TypeScript_
+        logging["`_«Component»_
+**Logging**
+_[TypeScript]_
 Structured logging utilities`"]
       end
     end
     subgraph appsBoundary["apps/ — built and deployed"]
-      app["`**App(s)** · _various build targets_
+      app["`_«Component»_
+**App(s)**
+_[various build targets]_
 Independently built and deployed projects — SPAs, SSR/static sites, services, etc.`"]
-      storybook["`**Storybook**
+      storybook["`_«Component»_
+**Storybook**
+_[Storybook]_
 Shared component explorer — pulls stories from across the monorepo`"]
     end
   end

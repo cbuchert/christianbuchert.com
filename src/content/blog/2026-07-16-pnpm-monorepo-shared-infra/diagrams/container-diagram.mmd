@@ -2,65 +2,98 @@
 title: "Frontend SPA — Runtime Component Diagram (C4 Level 3)"
 ---
 flowchart TB
-  subgraph spa["Frontend SPA — Runtime"]
-    entry["`**Entry Point**
+  subgraph spa["`**Frontend SPA — Runtime**
+_[Container]_`"]
+    entry["`_«Component»_
+**Entry Point**
 Bootstraps the app; installs providers and the root error boundary`"]
-    errorBoundary["`**Error Boundary**
+    errorBoundary["`_«Component»_
+**Error Boundary**
 Catches render errors, shows fallback, reports out`"]
-    router["`**Router**
+    router["`_«Component»_
+**Router**
 Route table; mounts layouts at outlets, views at routes`"]
-    guards["`**Route Guards**
+    guards["`_«Component»_
+**Route Guards**
 Gate protected routes on session state`"]
 
-    subgraph state["Global State"]
-      contexts["`**Contexts** · _React Context_
+    subgraph state["`**Global State**
+_[system]_`"]
+      contexts["`_«Component»_
+**Contexts**
+_[React Context]_
 Provider-based dependency injection`"]
-      store["`**Global Stores** · _Zustand_
+      store["`_«Component»_
+**Global Stores**
+_[Zustand]_
 Atomic reactive stores`"]
-      queryCache["`**Caching Client** · _TanStack Query_
+      queryCache["`_«Component»_
+**Caching Client**
+_[TanStack Query]_
 Server-state cache & synchronization`"]
-      authStore["`**Auth Session**
+      authStore["`_«Component»_
+**Auth Session**
 Tokens & session state`"]
     end
 
-    subgraph components["Components"]
-      layouts["`**Layouts**
+    subgraph components["`**Components**
+_[system]_`"]
+      layouts["`_«Component»_
+**Layouts**
 Mounted at router outlets`"]
-      views["`**Views**
+      views["`_«Component»_
+**Views**
 Rendered at routes`"]
-      elements["`**Atoms & Molecules**
+      elements["`_«Component»_
+**Atoms & Molecules**
 Composable UI primitives`"]
     end
 
-    hooks["`**Hooks**
+    hooks["`_«Component»_
+**Hooks**
 Adapters that resolve shared libraries for components`"]
-    services["`**Services Interface**
+    services["`_«Component»_
+**Services Interface**
 Port / outlet exposing shared libraries to the app`"]
 
-    subgraph dataaccess["Data Access"]
-      apiClient["`**API Client** · _generated, typesafe_
+    subgraph dataaccess["`**Data Access**
+_[system]_`"]
+      apiClient["`_«Component»_
+**API Client**
+_[generated, typesafe]_
 Typed methods per endpoint`"]
-      httpClient["`**HTTP Client** · _Axios_
+      httpClient["`_«Component»_
+**HTTP Client**
+_[Axios]_
 Transport`"]
-      interceptors["`**Interceptors**
+      interceptors["`_«Component»_
+**Interceptors**
 Auth token, refresh, retry, error normalization`"]
     end
 
-    subgraph sharedpkgs["Shared Packages — imported via @, exposed through services"]
-      ds["`**Design System**
+    subgraph sharedpkgs["`**Shared Packages**
+_imported via @, exposed through services_`"]
+      ds["`_«Component»_
+**Design System**
 Themed components & tokens`"]
-      i18n["`**i18n** · _i18next_
+      i18n["`_«Component»_
+**i18n**
+_[i18next]_
 Localization + locale bundles`"]
-      logging["`**Logging / Telemetry**
+      logging["`_«Component»_
+**Logging / Telemetry**
 Structured logging & error capture`"]
     end
   end
 
-  api["`**External APIs**
+  api["`_«External System»_
+**External APIs**
 Backend services the app consumes`"]
-  idp["`**Identity Provider**
+  idp["`_«External System»_
+**Identity Provider**
 OIDC / OAuth issuer`"]
-  errorSink["`**Error / Telemetry Sink**
+  errorSink["`_«External System»_
+**Error / Telemetry Sink**
 e.g. Sentry`"]
 
   entry -->|"wraps app in"| errorBoundary
