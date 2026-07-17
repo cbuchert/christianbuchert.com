@@ -1,5 +1,6 @@
 ---
 import { Code } from "astro:components"
+import { Lock, LockOpen, Maximize } from "@lucide/astro"
 
 interface Props {
   code: string
@@ -7,12 +8,22 @@ interface Props {
 const { code } = Astro.props
 ---
 
-<figure class="mermaid-figure" data-view="preview">
+<figure class="mermaid-figure" data-view="preview" data-locked="true">
   <pre class="mermaid">{code}</pre>
   <div class="mermaid-source">
     {/* ponytail: tokenized as TS, not mermaid — Shiki has no C4 grammar, and
         C4's Component(...)/Rel(...) syntax colorizes cleanly as function calls. */}
     <Code code={code.trim()} lang="typescript" theme="github-dark" />
+  </div>
+
+  <div class="mermaid-controls">
+    <button type="button" class="mermaid-btn mermaid-extents" aria-label="Reset zoom and pan">
+      <Maximize size={16} aria-hidden="true" />
+    </button>
+    <button type="button" class="mermaid-btn mermaid-lock" aria-pressed="false" aria-label="Enable pan and zoom">
+      <Lock class="lock-icon lock-locked" size={16} aria-hidden="true" />
+      <LockOpen class="lock-icon lock-unlocked" size={16} aria-hidden="true" />
+    </button>
   </div>
 
   <div class="mermaid-toggle" role="group" aria-label="Diagram view">
@@ -30,34 +41,54 @@ const { code } = Astro.props
   mermaid.initialize({ startOnLoad: false })
   await mermaid.run()
 
-  // Make each rendered diagram pan/zoomable. Wrap the SVG in a viewport div and
-  // pan/zoom that via CSS transform, so we never fight mermaid's own SVG transforms.
-  document.querySelectorAll<HTMLElement>(".mermaid").forEach((container) => {
-    const svg = container.querySelector("svg")
-    if (!svg) return
-    const viewport = document.createElement("div")
-    viewport.className = "mermaid-viewport"
-    svg.replaceWith(viewport)
-    viewport.appendChild(svg)
-    // Override mermaid's natural-width cap so the diagram fills the column width.
-    svg.style.maxWidth = "none"
-    svg.style.width = "100%"
-    svg.style.height = "auto"
-    // No bounds: bounds-clamping shifts the view after a zoom and breaks cursor
-    // anchoring. Double-click resets to the initial full-width fit instead.
-    const pz = panzoom(viewport, { maxZoom: 5, minZoom: 0.5, zoomDoubleClickSpeed: 1 })
-    viewport.addEventListener("dblclick", () => {
-      pz.zoomAbs(0, 0, 1)
-      pz.moveTo(0, 0)
-    })
-  })
-
-  // Wire the Code/Preview toggle for every diagram on the page.
   document.querySelectorAll<HTMLElement>(".mermaid-figure").forEach((figure) => {
+    // Make the rendered diagram pan/zoomable. Wrap the SVG in a viewport div and
+    // pan/zoom that via CSS transform, so we never fight mermaid's own transforms.
+    const svg = figure.querySelector<SVGElement>(".mermaid svg")
+    if (svg) {
+      const viewport = document.createElement("div")
+      viewport.className = "mermaid-viewport"
+      svg.replaceWith(viewport)
+      viewport.appendChild(svg)
+      // Override mermaid's natural-width cap so the diagram fills the column width.
+      svg.style.maxWidth = "none"
+      svg.style.width = "100%"
+      svg.style.height = "auto"
+
+      // Locked by default so the page scrolls normally over the diagram. The
+      // beforeWheel/beforeMouseDown gates let panzoom ignore the events while
+      // locked (so it never preventDefaults the wheel), releasing page scroll.
+      let locked = true
+      const pz = panzoom(viewport, {
+        maxZoom: 5,
+        minZoom: 0.5,
+        zoomDoubleClickSpeed: 1,
+        beforeWheel: () => locked,
+        beforeMouseDown: () => locked,
+      })
+      // Zoom-to-extents: reset to the initial full-width fit.
+      const reset = () => {
+        pz.zoomAbs(0, 0, 1)
+        pz.moveTo(0, 0)
+      }
+      viewport.addEventListener("dblclick", reset)
+      figure.querySelector(".mermaid-extents")?.addEventListener("click", reset)
+
+      // Lock keeps the current scale/position; it only gates interaction.
+      const lockBtn = figure.querySelector<HTMLButtonElement>(".mermaid-lock")
+      lockBtn?.addEventListener("click", () => {
+        locked = !locked
+        figure.dataset.locked = String(locked)
+        lockBtn.setAttribute("aria-pressed", String(!locked))
+        lockBtn.setAttribute("aria-label", locked ? "Enable pan and zoom" : "Disable pan and zoom")
+      })
+    }
+
+    // Wire the Code/Preview toggle.
     const buttons = figure.querySelectorAll<HTMLButtonElement>(".mermaid-toggle button")
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
-        figure.dataset.view = button.dataset.view
+        figure.dataset.view = button.dataset.view!
         buttons.forEach(b => b.setAttribute("aria-pressed", String(b === button)))
       })
     })
@@ -66,9 +97,10 @@ const { code } = Astro.props
 
 <style>
   .mermaid-figure {
+    --reserved-top: 2.1rem;
     position: relative;
     margin: 0;
-    padding-top: 2.1rem;
+    padding-top: var(--reserved-top);
   }
 
   /* Drop the default pre margin so the block sits just below the toggle. */
@@ -92,13 +124,19 @@ const { code } = Astro.props
     overflow: hidden; /* clip the diagram as it pans/zooms within the frame */
   }
 
-  .mermaid-viewport {
-    width: 100%; /* fill the column so the diagram maximizes visible width */
+  /* .mermaid-viewport is created in JS, so it lacks Astro's scope attribute —
+     target it with :global() nested under the scoped figure. */
+  .mermaid-figure :global(.mermaid-viewport) {
     cursor: grab;
     touch-action: none; /* let panzoom own touch gestures (pinch/drag) */
   }
-  .mermaid-viewport:active {
+  .mermaid-figure :global(.mermaid-viewport:active) {
     cursor: grabbing;
+  }
+  /* When locked, restore normal scrolling/selection over the diagram. */
+  .mermaid-figure[data-locked="true"] :global(.mermaid-viewport) {
+    cursor: default;
+    touch-action: auto;
   }
 
   .mermaid-source {
@@ -110,6 +148,50 @@ const { code } = Astro.props
     display: none;
   }
   .mermaid-figure[data-view="code"] .mermaid {
+    display: none;
+  }
+
+  /* Pan/zoom controls live in the preview's top-right corner, only in preview view. */
+  .mermaid-controls {
+    position: absolute;
+    top: calc(var(--reserved-top) + 0.4rem);
+    right: 0.4rem;
+    display: inline-flex;
+    gap: 0.3rem;
+  }
+  .mermaid-figure[data-view="code"] .mermaid-controls {
+    display: none;
+  }
+
+  .mermaid-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.25rem;
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-radius: 0.375rem;
+    background: color-mix(in srgb, currentColor 6%, transparent);
+    color: inherit;
+    opacity: 0.55;
+    cursor: pointer;
+  }
+  .mermaid-btn:hover {
+    opacity: 1;
+  }
+  /* Highlight the lock while pan/zoom is enabled. */
+  .mermaid-lock[aria-pressed="true"] {
+    opacity: 1;
+  }
+  /* Zoom-to-extents only applies while unlocked. */
+  .mermaid-figure[data-locked="true"] .mermaid-extents {
+    display: none;
+  }
+
+  .lock-icon {
+    display: block;
+  }
+  .mermaid-figure[data-locked="false"] .lock-locked,
+  .mermaid-figure[data-locked="true"] .lock-unlocked {
     display: none;
   }
 
