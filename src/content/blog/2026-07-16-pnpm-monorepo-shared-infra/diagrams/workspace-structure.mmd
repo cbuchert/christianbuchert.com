@@ -1,0 +1,49 @@
+C4Component
+    title Supplementary View — Monorepo Workspace Structure (Code Organization)
+
+    Boundary(monorepo, "PNPM Workspace Monorepo") {
+
+        Boundary(pkgs, "packages/", "Shared, not deployed") {
+
+            Boundary(config, "config/", "Shared configuration") {
+                Component(designTokens, "Design Tokens", "", "Color, spacing, and typography primitives")
+                Component(lintConfig, "Lint Config", "ESLint / Biome", "Shared linting and formatting rules")
+                Component(testConfig, "Test Config", "Vitest / Playwright", "Unit and e2e shared test configuration")
+                Component(tsConfig, "TypeScript Config", "tsconfig.json", "Shared base TS configurations")
+            }
+
+            Boundary(framework, "framework/", "Framework building blocks") {
+                Component(components, "Component Library", "", "Shared UI components")
+                Component(designSystem, "Design System", "", "Themed component compositions")
+                Component(i18n, "i18n", "i18next", "Internationalization infrastructure")
+                Component(testFramework, "Test Framework", "Vitest", "Shared test utilities and setup")
+                Component(lintInfra, "Lint Infrastructure", "ESLint / Biome", "Custom lint rules and plugins")
+            }
+
+            Boundary(libs, "lib/", "Shared library functions") {
+                Component(logging, "Logging", "TypeScript", "Structured logging utilities")
+            }
+        }
+
+        Boundary(appsBoundary, "apps/", "Built and deployed") {
+            Component(app, "App(s)", "Various build targets", "Independently built and deployed projects — SPAs, SSR/static sites, services, etc.")
+            Component(storybook, "Storybook", "Storybook", "Shared component explorer — pulls stories from across the monorepo")
+        }
+    }
+
+    Boundary(legend, "Legend — Import Alias Convention") {
+        Component(aliasIntra, "~  intra-workspace", "", "Resolves within the same workspace (e.g. an app's own utils)")
+        Component(aliasCross, "@  cross-workspace", "", "Resolves across workspaces (every arrow below)")
+    }
+
+    Rel(app, components, "imports")
+    Rel(app, designSystem, "imports")
+    Rel(app, i18n, "imports")
+    Rel(app, logging, "imports")
+    Rel(storybook, components, "collects stories from")
+    Rel(storybook, designSystem, "collects stories from")
+    Rel(components, designTokens, "imports")
+    Rel(designSystem, components, "composes")
+    Rel(designSystem, designTokens, "imports")
+    Rel(lintInfra, lintConfig, "extends")
+    Rel(testFramework, testConfig, "extends")

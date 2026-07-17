@@ -1,0 +1,76 @@
+C4Component
+    title Frontend SPA — Runtime Component Diagram (C4 Level 3)
+
+    Container_Boundary(spa, "Frontend SPA — Runtime") {
+
+        Component(entry, "Entry Point", "", "Bootstraps the app; installs providers and the root error boundary")
+        Component(errorBoundary, "Error Boundary", "", "Catches render errors, shows fallback, reports out")
+        Component(router, "Router", "", "Route table; mounts layouts at outlets, views at routes")
+        Component(guards, "Route Guards", "", "Gate protected routes on session state")
+
+        Boundary(state, "Global State") {
+            Component(contexts, "Contexts", "React Context", "Provider-based dependency injection")
+            Component(store, "Global Stores", "Zustand", "Atomic reactive stores")
+            Component(queryCache, "Caching Client", "TanStack Query", "Server-state cache & synchronization")
+            Component(authStore, "Auth Session", "", "Tokens & session state")
+        }
+
+        Boundary(components, "Components") {
+            Component(layouts, "Layouts", "", "Mounted at router outlets")
+            Component(views, "Views", "", "Rendered at routes")
+            Component(elements, "Atoms & Molecules", "", "Composable UI primitives")
+        }
+
+        Component(hooks, "Hooks", "", "Adapters that resolve shared libraries for components")
+        Component(services, "Services Interface", "", "Port / outlet exposing shared libraries to the app")
+
+        Boundary(dataaccess, "Data Access") {
+            Component(apiClient, "API Client", "generated, typesafe", "Typed methods per endpoint")
+            Component(httpClient, "HTTP Client", "Axios", "Transport")
+            Component(interceptors, "Interceptors", "", "Auth token, refresh, retry, error normalization")
+        }
+
+        Boundary(sharedpkgs, "Shared Packages", "imported via @, exposed through services") {
+            Component(ds, "Design System", "", "Themed components & tokens")
+            Component(i18n, "i18n", "i18next", "Localization + locale bundles")
+            Component(logging, "Logging / Telemetry", "", "Structured logging & error capture")
+        }
+    }
+
+    System_Ext(api, "External APIs", "Backend services the app consumes")
+    System_Ext(idp, "Identity Provider", "OIDC / OAuth issuer")
+    System_Ext(errorSink, "Error / Telemetry Sink", "e.g. Sentry")
+
+    Rel(entry, errorBoundary, "wraps app in")
+    Rel(entry, router, "mounts")
+    Rel(entry, contexts, "provides at root")
+
+    Rel(router, guards, "protects routes with")
+    Rel(router, layouts, "mounts at outlets")
+    Rel(router, views, "renders at routes")
+    Rel(guards, authStore, "checks session in")
+
+    Rel(views, elements, "composed from")
+    Rel(layouts, elements, "composed from")
+
+    Rel(views, store, "read / write")
+    Rel(views, queryCache, "read server state")
+
+    Rel(queryCache, apiClient, "fetches via")
+    Rel(apiClient, httpClient, "built on")
+    Rel(httpClient, interceptors, "applies")
+    Rel(httpClient, api, "requests")
+    Rel(interceptors, authStore, "attach token from")
+    Rel(interceptors, idp, "refresh token via")
+    Rel(authStore, idp, "authenticates via")
+
+    Rel(views, hooks, "consume")
+    Rel(elements, hooks, "consume")
+    Rel(hooks, services, "resolve lib via")
+    Rel(services, ds, "exposes")
+    Rel(services, i18n, "exposes")
+    Rel(services, logging, "exposes")
+
+    Rel(errorBoundary, logging, "reports to")
+    Rel(interceptors, logging, "report errors to")
+    Rel(logging, errorSink, "ships to")

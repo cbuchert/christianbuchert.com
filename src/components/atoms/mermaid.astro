@@ -1,11 +1,25 @@
 ---
+import { Code } from "astro:components"
+
 interface Props {
   code: string
 }
 const { code } = Astro.props
 ---
 
-<pre class="mermaid">{code}</pre>
+<figure class="mermaid-figure" data-view="preview">
+  <pre class="mermaid">{code}</pre>
+  <div class="mermaid-source">
+    {/* ponytail: tokenized as TS, not mermaid — Shiki has no C4 grammar, and
+        C4's Component(...)/Rel(...) syntax colorizes cleanly as function calls. */}
+    <Code code={code.trim()} lang="typescript" theme="github-dark" />
+  </div>
+
+  <div class="mermaid-toggle" role="group" aria-label="Diagram view">
+    <button type="button" data-view="code">Code</button>
+    <button type="button" data-view="preview" aria-pressed="true">Preview</button>
+  </div>
+</figure>
 
 <script>
   // ponytail: mermaid is client-only; Astro bundles + dedupes this module
@@ -14,13 +28,67 @@ const { code } = Astro.props
 
   mermaid.initialize({ startOnLoad: false })
   await mermaid.run()
+
+  // Wire the Code/Preview toggle for every diagram on the page.
+  document.querySelectorAll<HTMLElement>(".mermaid-figure").forEach((figure) => {
+    const buttons = figure.querySelectorAll<HTMLButtonElement>(".mermaid-toggle button")
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        figure.dataset.view = button.dataset.view
+        buttons.forEach(b => b.setAttribute("aria-pressed", String(b === button)))
+      })
+    })
+  })
 </script>
 
 <style>
+  .mermaid-figure {
+    position: relative;
+    margin: 0;
+    padding-top: 2.5rem;
+  }
+
   .mermaid {
     display: flex;
     justify-content: center;
     background: none;
-    padding: 0;
+  }
+
+  .mermaid-source {
+    overflow-x: auto;
+  }
+
+  /* Show one view at a time. */
+  .mermaid-figure[data-view="preview"] .mermaid-source {
+    display: none;
+  }
+  .mermaid-figure[data-view="code"] .mermaid {
+    display: none;
+  }
+
+  .mermaid-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: inline-flex;
+    border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+    border-radius: 0.375rem;
+    overflow: hidden;
+    font-size: 0.75rem;
+  }
+
+  .mermaid-toggle button {
+    padding: 0.2rem 0.6rem;
+    border: 0;
+    background: none;
+    color: inherit;
+    opacity: 0.55;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .mermaid-toggle button[aria-pressed="true"] {
+    background: color-mix(in srgb, currentColor 12%, transparent);
+    opacity: 1;
   }
 </style>
