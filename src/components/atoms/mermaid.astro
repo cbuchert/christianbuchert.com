@@ -68,7 +68,23 @@ const { code } = Astro.props
   .mermaid-figure {
     position: relative;
     margin: 0;
-    padding-top: 2.5rem;
+    padding-top: 2.1rem;
+  }
+
+  /* Drop the default pre margin so the block sits just below the toggle. */
+  .mermaid-figure pre {
+    margin: 0;
+  }
+
+  /* On desktop, break the diagram out wider than the prose column. Symmetric
+     negative margins (not transform) keep the layout box on-screen, and the
+     viewport clamp prevents horizontal overflow. */
+  @media (min-width: 48rem) {
+    .mermaid-figure {
+      --figure-width: min(64rem, calc(100vw - 4rem));
+      width: var(--figure-width);
+      margin-inline: calc((100% - var(--figure-width)) / 2);
+    }
   }
 
   .mermaid {
