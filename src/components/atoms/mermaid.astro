@@ -25,9 +25,32 @@ const { code } = Astro.props
   // ponytail: mermaid is client-only; Astro bundles + dedupes this module
   // script, so it runs once no matter how many diagrams are on the page.
   import mermaid from "mermaid"
+  import panzoom from "panzoom"
 
   mermaid.initialize({ startOnLoad: false })
   await mermaid.run()
+
+  // Make each rendered diagram pan/zoomable. Wrap the SVG in a viewport div and
+  // pan/zoom that via CSS transform, so we never fight mermaid's own SVG transforms.
+  document.querySelectorAll<HTMLElement>(".mermaid").forEach((container) => {
+    const svg = container.querySelector("svg")
+    if (!svg) return
+    const viewport = document.createElement("div")
+    viewport.className = "mermaid-viewport"
+    svg.replaceWith(viewport)
+    viewport.appendChild(svg)
+    // Override mermaid's natural-width cap so the diagram fills the column width.
+    svg.style.maxWidth = "none"
+    svg.style.width = "100%"
+    svg.style.height = "auto"
+    // No bounds: bounds-clamping shifts the view after a zoom and breaks cursor
+    // anchoring. Double-click resets to the initial full-width fit instead.
+    const pz = panzoom(viewport, { maxZoom: 5, minZoom: 0.5, zoomDoubleClickSpeed: 1 })
+    viewport.addEventListener("dblclick", () => {
+      pz.zoomAbs(0, 0, 1)
+      pz.moveTo(0, 0)
+    })
+  })
 
   // Wire the Code/Preview toggle for every diagram on the page.
   document.querySelectorAll<HTMLElement>(".mermaid-figure").forEach((figure) => {
@@ -49,9 +72,17 @@ const { code } = Astro.props
   }
 
   .mermaid {
-    display: flex;
-    justify-content: center;
     background: none;
+    overflow: hidden; /* clip the diagram as it pans/zooms within the frame */
+  }
+
+  .mermaid-viewport {
+    width: 100%; /* fill the column so the diagram maximizes visible width */
+    cursor: grab;
+    touch-action: none; /* let panzoom own touch gestures (pinch/drag) */
+  }
+  .mermaid-viewport:active {
+    cursor: grabbing;
   }
 
   .mermaid-source {
