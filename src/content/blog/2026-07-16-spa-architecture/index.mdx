@@ -1,0 +1,54 @@
+---
+title: 'React FE SPA Architecture'
+description: 'The Front End infrastructure you tend to build around your app'
+pubDate: '2026-07-16'
+---
+
+import Mermaid from '@/components/atoms/mermaid.astro'
+import containerDiagram from './diagrams/container-diagram.mmd?raw'
+
+## TL;DR
+
+> An extensible production front end single page application is complex, even before you add your own code.
+> 
+> If a SPA is the right tool for the job, this is a resonable starting point.
+
+- [ ] todo: Write a "Do I need a SPA" decision matrix blog post
+
+## A modern React flavored web app, for your consideration
+
+Let's say, hypothetically, that you get hired by some company. "We're building a greenfield product refresh. We want to do it in as a single page application using React." Alright.
+
+Let's defer the "what is it about this project that requires us to use React" kind of questions and take your new employer seriously. What is required to build an enterprise web app in the Year of our Lord 2026 that is stable, scalable, performant, and can support hundreds of devs throwing code at it from all around the world many hundreds of times a day?
+
+Are your APIs documented with OpenAPI? Congratulations! You've got typesafe HTTP clients! Do you need to share cache data between browser contexts? Be careful of `staleTime: Infinity` and be on your way.
+
+So, the next time you get hired and are told "build the framework," some permutation of this might be a reasonable place to start.
+
+## Container view
+
+<Mermaid code={containerDiagram} />
+
+Each of these probably merits its own write up (or set of write-ups). Future work
+
+## Completeness
+
+There are additional infrastructural pieces that are not in this diagram that might be a part of your project, such as
+
+- Alternative BE / FE communication methods (RPC, Web Sockets, SSE's, GraphQL)
+- Search / Keyboard Shortcuts / CLI management
+- Push notifications
+- Auto updating
+- Data sharing between browser contexts
+- Gestural input controller
+- Big hairy print server integrations
+- Big hairy PoS integrations
+- Local First / PWA
+
+Once you've got the structure of your application penned down in broad strokes, it's fairly straight forward to extend given this as a starting point.
+
+## Thanks
+
+**Brycen Ainge** for being a great listener, a great collaborator, and an all around great colleague. I'll never write error handling the same again.
+
+**Josh Bendson** for introducing me to rigorous C4 diagrams and the patience to correct me while I stumbled through the concept.

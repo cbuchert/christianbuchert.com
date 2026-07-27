@@ -1,0 +1,128 @@
+---
+title: "Frontend SPA — Runtime Component Diagram (C4 Level 3)"
+---
+flowchart TB
+  subgraph spa["`**Frontend SPA — Runtime**
+_[Container]_`"]
+    entry["`_«Component»_
+**Entry Point**
+Bootstraps the app; installs providers and the root error boundary`"]
+    errorBoundary["`_«Component»_
+**Error Boundary**
+Catches render errors, shows fallback, reports out`"]
+    router["`_«Component»_
+**Router**
+Route table; mounts layouts at outlets, views at routes`"]
+    guards["`_«Component»_
+**Route Guards**
+Gate protected routes on session state`"]
+
+    subgraph state["`**Global State**
+_[system]_`"]
+      contexts["`_«Component»_
+**Contexts**
+_[React Context]_
+Provider-based dependency injection`"]
+      store["`_«Component»_
+**Global Stores**
+_[Zustand]_
+Atomic reactive stores`"]
+      queryCache["`_«Component»_
+**Caching Client**
+_[TanStack Query]_
+Server-state cache & synchronization`"]
+      authStore["`_«Component»_
+**Auth Session**
+Tokens & session state`"]
+    end
+
+    subgraph components["`**Components**
+_[system]_`"]
+      layouts["`_«Component»_
+**Layouts**
+Mounted at router outlets`"]
+      views["`_«Component»_
+**Views**
+Rendered at routes`"]
+      elements["`_«Component»_
+**Atoms & Molecules**
+Composable UI primitives`"]
+    end
+
+    hooks["`_«Component»_
+**Hooks**
+Adapters that resolve shared libraries for components`"]
+    services["`_«Component»_
+**Services Interface**
+Port / outlet exposing shared libraries to the app`"]
+
+    subgraph dataaccess["`**Data Access**
+_[system]_`"]
+      apiClient["`_«Component»_
+**API Client**
+_[generated, typesafe]_
+Typed methods per endpoint`"]
+      httpClient["`_«Component»_
+**HTTP Client**
+_[Axios]_
+Transport`"]
+      interceptors["`_«Component»_
+**Interceptors**
+Auth token, refresh, retry, error normalization`"]
+    end
+
+    subgraph sharedpkgs["`**Shared Packages**
+_imported via @, exposed through services_`"]
+      ds["`_«Component»_
+**Design System**
+Themed components & tokens`"]
+      i18n["`_«Component»_
+**i18n**
+_[i18next]_
+Localization + locale bundles`"]
+      logging["`_«Component»_
+**Logging / Telemetry**
+Structured logging & error capture`"]
+    end
+  end
+
+  api["`_«External System»_
+**External APIs**
+Backend services the app consumes`"]
+  idp["`_«External System»_
+**Identity Provider**
+OIDC / OAuth issuer`"]
+  errorSink["`_«External System»_
+**Error / Telemetry Sink**
+e.g. Sentry`"]
+
+  entry -->|"wraps app in"| errorBoundary
+  entry -->|"mounts"| router
+  entry -->|"provides at root"| contexts
+  router -->|"protects routes with"| guards
+  router -->|"mounts at outlets"| layouts
+  router -->|"renders at routes"| views
+  guards -->|"checks session in"| authStore
+  views -->|"composed from"| elements
+  layouts -->|"composed from"| elements
+  views -->|"read / write"| store
+  views -->|"read server state"| queryCache
+  queryCache -->|"fetches via"| apiClient
+  apiClient -->|"built on"| httpClient
+  httpClient -->|"applies"| interceptors
+  httpClient -->|"requests"| api
+  interceptors -->|"attach token from"| authStore
+  interceptors -->|"refresh token via"| idp
+  authStore -->|"authenticates via"| idp
+  views -->|"consume"| hooks
+  elements -->|"consume"| hooks
+  hooks -->|"resolve lib via"| services
+  services -->|"exposes"| ds
+  services -->|"exposes"| i18n
+  services -->|"exposes"| logging
+  errorBoundary -->|"reports to"| logging
+  interceptors -->|"report errors to"| logging
+  logging -->|"ships to"| errorSink
+
+  classDef ext fill:#8a8a8a,stroke:#666,color:#fff;
+  class api,idp,errorSink ext;
