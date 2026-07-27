@@ -1,3 +1,10 @@
+# Not a real monorepo. This file exists so pnpm 11 (local) approves the
+# esbuild/sharp build scripts via `allowBuilds`. The `packages` glob is required
+# because Vercel builds with pnpm 9, which errors on a workspace file that has
+# no non-empty `packages` field ("packages field missing or empty"). The glob
+# matches nothing, so the repo stays effectively single-package.
+packages:
+  - "packages/*"
 allowBuilds:
   esbuild: true
   sharp: true
