@@ -1,117 +1,275 @@
 ---
 title: 'Board Compaction: Shape vs. Move-Locality'
-description: 'Why a grid puzzle''s resting shape goes lopsided, why the obvious fixes fail, and why shape is the camera''s problem — not the packer''s.'
+description: 'Why a grid puzzle''s resting shape goes lopsided, why every obvious fix trades the shape for holes or unpredictable movement, and the open search for a packer that threads the needle.'
 pubDate: '2026-07-28'
 ---
 
 import CompactionDemo from './demos/compaction-demo.astro'
 
-{/* STUB — section skeleton from the strategy handoff. Prose is TODO; the demos
-    are wired and working. Thesis (§9) is the spine; write toward it. */}
+{/* DRAFT — first-pass prose over the strategy handoff. Edit freely; a few
+    TODOs remain for Paint-Chips specifics, Demo E, and the thanks. */}
 
 ## TL;DR
 
-> In a grid that must stay predictable to touch, you cannot pack your way out of
-> a lopsided shape: hole-free + move-local forces the corner staircase, so the
-> shape is the camera's problem, not the packer's.
-
-{/* TODO: one paragraph setting up Paint Chips + the compaction moment. */}
+> I want a compaction that packs *reasonably evenly* and *moves chips
+> predictably*. Those two pull hard against each other: hole-free + move-local
+> forces the lopsided corner staircase. A tempting escape is to fix the shape
+> with the camera — but auto-panning the view on the player feels bad, so I've
+> ruled it out, and the shape stays the packer's problem. This is the search for a
+> packer that threads the needle.
 
 ## The setting
 
-{/* TODO: domain model — sparse board (cellId → stackId), STRIDE addressing,
-    compaction on pause, and the crux: play is DOMINATED by mid-board removals
-    (merges + category completions). That fact drives everything below. */}
+Paint Chips is a word-sorting puzzle played on a 2D grid. Every occupied cell
+holds a stack — a chip — and I store the board as a sparse map from cell to
+stack; empty cells simply aren't in the map. Cells are addressed as
+`row * STRIDE + col` with a big fixed `STRIDE`, so a cell keeps its identity as
+the occupied region grows, and numeric cell order is just reading order: top to
+bottom, left to right.
+
+When you pause, the board **compacts** — occupied cells slide together to close
+gaps so the play area shrinks to fit. That slide is the compaction, and its
+resting arrangement is the whole subject here.
+
+What makes this hard is *what* triggers it. Two events, and both remove a stack
+from an **interior** cell: a **merge** (two same-category stacks combine,
+vacating the source cell) and a **category completion** (a finished stack leaves
+the board). Real play is dominated by these mid-board removals. Hold onto that —
+it's the crux of everything below.
+
+{/* TODO: a sentence or two of Paint-Chips flavor here if you want it — what a
+    chip looks like, why a pause happens. */}
 
 ## The problem: a lopsided board
 
-{/* TODO: the baseline packs toward the top-left corner and always converges to
-    a Young staircase — so row 0 is the widest row and col 0 the tallest column
-    BY CONSTRUCTION. Lopsidedness is the signature of corner-packing, not a bug. */}
+The baseline is the obvious thing. Pack toward the top-left corner: slide every
+row left against column 0, slide every column up against row 0, repeat until
+nothing moves. Iterate that and it always converges to the same family of
+shapes — a Young diagram, a staircase.
+
+And the staircase has the problem built into its definition. In any top-left
+staircase, row 0 is the widest row and column 0 is the tallest column — not by
+accident, by construction. So over a game you grow a long top row and a long
+left column, and the board reads as lopsided. It isn't a tuning bug you can dial
+out; it's the mathematical signature of packing into a corner. Biasing which
+axis packs first (wide-first vs tall-first) only swaps which of the two is
+longer. Both maxima still live at the corner.
 
 ### Demo A — the staircase forms
 
-{/* TODO: watch the long top row + left column grow. It's hole-free, and each
-    removal only nudges one row's tail + a column pull-up (locality). */}
+Pull a few chips out and watch it settle. Two things to notice. It's
+**hole-free** — every row is a solid run from the left, every column a solid run
+from the top, no gaps that read as floating islands. And it's **local**: remove
+a chip from the middle and only that row's tail shifts left, plus a one-cell
+pull-up in the column above the gap. Nothing teleports. That locality is the
+whole reason the baseline is livable — and, as we'll see, the whole reason it's
+stuck being lopsided.
 
 <CompactionDemo strategy="corner" caption="Corner-pack (baseline). Click a chip to remove it." />
 
 ## The hard constraint: move-locality
 
-{/* TODO: any fix must not make chips slide unpredictably. Corner-pack is local
-    because it packs each row/column independently, anchored to a fixed edge.
-    Contrast a measured merge: ~3 of 11 chips under corner vs ~6 under √-wrap. */}
+Here's the rule any fix has to respect: chips can't slide **unpredictably.** If a
+merge in one corner shoves a chip on the far side of the board across three
+cells, the board stops feeling like a physical object and starts feeling like a
+slot machine. This constraint has teeth — it already killed my first idea.
+
+That idea was a **dynamic √ wrap**: take all `n` occupied stacks in reading order
+and lay them into a `⌈√n⌉`-wide grid. You get a near-perfect square — exactly the
+even shape I was after. On device it was a disaster: the whole board slid on
+nearly every move. The root cause is that a chip's cell is derived from its rank
+in **one global sequence** — remove a stack from the middle and everything after
+it re-indexes by one, cascading down the board. And each time `n` crosses a √
+boundary the row width changes and the entire thing re-wraps.
+
+The corner-pack avoids this precisely because it packs each row and each column
+**independently**, each anchored to a fixed edge. A removal stays local because
+nothing downstream depends on a global count. In one measured mid-board merge,
+corner-pack moved ~3 of 11 chips; √-wrap moved ~6.
+
+The general version of the rule: locality doesn't require corner-packing, it
+requires **per-line-rank positioning** — a chip's cell is a function of *which
+line it's in and its rank within that line*, never its rank in a single global
+order. Any total-order linearization cascades, and is out.
 
 ### Demo B — the √-wrap cascade
 
-{/* TODO: dynamic-√ wrap lays all stacks into a ⌈√n⌉-wide grid in reading order.
-    Near-square shape, but a chip's cell derives from its GLOBAL rank — one
-    mid-board removal re-indexes everything after it → the whole board slides.
-    The anti-pattern: total-order linearization cascades. */}
+Same removals, but √-wrapped. One chip out of the middle and the whole tail of
+the board re-flows past it. Watch `moved` spike. This is the anti-pattern in
+miniature.
 
 <CompactionDemo strategy="wrap" caption="√-wrap. A single mid-board removal re-flows the whole board." />
 
 ## The key insight: hole-free + local ⟹ the corner staircase
 
-{/* TODO: the heart of the story. Two properties you'd want — hole-free (every
-    row/col contiguous from an edge) and move-local (each line anchored to a
-    fixed edge). Together they ARE the staircase. The only free variable is which
-    corner, which merely relocates the long row/column — never removes it.
-    Corollaries: center-anchoring breaks locality (append shifts ~half a line);
-    to shorten the left column you must stop left-anchoring → holes. You cannot
-    de-lopside at the packing layer without paying in holes or teleports. */}
+So I have two things I want from a compaction:
+
+- **Hole-free:** every row a contiguous run from column 0, every column a
+  contiguous run from row 0. No interior gaps that read as islands.
+- **Move-local:** each line anchored to a fixed edge, so a change stays local.
+
+Here's the uncomfortable part. *Those two properties, together, ARE the corner
+staircase.* Contiguous-from-the-edge on both axes is the definition of the
+staircase, and the staircase's defining feature is that its longest row and
+longest column both sit at the anchor corner. The only thing you get to choose is
+**which corner** — and that just relocates the long row and column to a different
+edge. It never removes them.
+
+That kills the tempting fixes one at a time:
+
+- **Center it into a pyramid?** Centering a line means appending to it shifts
+  chips at *both* ends — about half the line moves for one addition.
+  Edge-anchoring is load-bearing; it's the entire reason corner-pack is local. So
+  centering trades the shape straight back for the movement.
+- **Just shorten the left column?** To do that you have to stop left-anchoring
+  every row — which opens a hole *under* the rows you pull off the edge.
+
+You cannot de-lopside at the packing layer without paying in either **holes** or
+**unpredictable movement.** That's not a failure of imagination; it's the shape
+of the problem. The next two demos are me paying each price and not liking the
+bill.
 
 ### Demo C — brick's two failures
 
-{/* TODO: even rows left, odd rows right, to break "every row on the left edge."
-    The aggregate metrics improve — but the phone kills it: (1) islands — a short
-    right-flushed row leaves an interior hole; (2) teleporting — left/right is
-    chosen by row-index PARITY, so a merge that changes a row's width re-sorts
-    the staircase, flips its parity, and jumps the whole row edge-to-edge. */}
+**Brick** was my attempt to break the "every row hugs the left edge" pattern:
+even rows flush left, odd rows flush right. On the aggregate metrics it looked
+like a win — lower elongation, less load on the origin edges. Then I put it on a
+phone and it came apart two ways.
+
+**Islands.** A short right-flushed row leaves an empty gap between it and the left
+edge — an interior hole. I bought balance with holes, exactly as the theorem
+warned.
+
+**Teleporting.** Left-vs-right is chosen by row-index **parity.** A merge changes
+a row's width, the staircase re-sorts widest-first, the row's index parity flips
+— and the whole row jumps edge to edge in a single settle. The mean-chips-moved
+number (~1.7× the baseline) makes that sound mild. A whole row snapping across
+the board does not feel mild.
 
 <CompactionDemo strategy="brick" caption="Brick. Watch islands appear, and whole rows teleport left↔right." />
 
 ### Demo D — the mirror's jitter
 
-{/* TODO: "just flip it so the wide row rests on the floor." Implemented as a
-    vertical mirror of the corner-packer, which is NON-IDEMPOTENT: re-compacting
-    a settled board lands the same cells with a PERMUTED assignment. A resting
-    board reshuffles on every pause, with no move made. Settle-jitter ≠ 0 is a
-    hard gate — this is what disqualifies it. (A NATIVE down-pack is a real
-    fixpoint and doesn't jitter — but geometrically it's just a mirror of the
-    baseline; its only real effect is orientation, which a metric can't judge.) */}
+**Mirror-down** came from a nicer intuition: instead of the wide row hanging off
+the top like it's glued to the ceiling, let it rest on the floor like a real
+pile. I implemented it as a vertical mirror of the corner-packer's output — and
+that's the trap.
+
+Mirroring a corner-packer is **non-idempotent.** The up-pack sorts each column by
+ascending row; the flip reverses that key, so when the loop recompacts an
+already-settled board, the same cells come back with a *permuted* stack
+assignment. Since the game recompacts on every pause, a resting board reshuffles
+itself — chips moving with no move made. Try it: don't remove anything, just hit
+Reset twice and watch the settle-jitter number.
+
+(For the record: a **native** down-pack — a genuine bottom-anchored fixpoint, not
+a mirror — doesn't jitter. But geometrically it's just the baseline upside down:
+same elongation, same locality. Its only real effect is orientation, and whether
+"resting on a floor" beats "hanging from a ceiling" is a perceptual question a
+metric can't answer for me.)
 
 <CompactionDemo strategy="mirror" caption="Mirror-down. Remove nothing, just Reset twice — the board reshuffles itself." />
 
-## The payoff: it's a camera problem
+## The camera non-answer
 
-{/* TODO Demo E (NOT YET BUILT): keep the corner-pack; after each settle, pan
-    the viewport so the occupied CENTROID (not the bounding box — a staircase is
-    top-left-heavy even inside a centered box) sits at the view center. Same
-    lopsided staircase, reads balanced, ZERO chips moved. Contrast box-center
-    (still looks lopsided) vs centroid-center (fixed). Needs a new component:
-    a fixed staircase with a movable viewport frame. */}
+The agent I handed this to reached a clean conclusion: shape isn't the packer's
+problem, it's the camera's. Keep the lopsided corner-pack, and after each settle
+pan the viewport so the occupied **centroid** sits at the center of the view.
+Zero chips move, so locality is untouched by construction, and the board simply
+stops *looking* lopsided. (The subtlety worth keeping: center on the centroid of
+occupied cells, not the bounding box — a staircase is top-left-heavy even inside
+a perfectly centered box, so box-centering doesn't fix the perception and
+centroid-centering does.)
+
+It's a real result. It's just not one I'm willing to use — and here the *why*
+matters, because it isn't a technical wall. The game can pan; that's not the
+blocker. Moving the view out from under the player, on its own, without the
+player asking for it, feels bad. It's the kind of thing that makes an interface
+feel like it has a mind of its own, and it trades a shape complaint for a worse
+one. So I'm treating a self-panning camera as off the table by choice, and the
+shape stays the packer's problem.
+
+{/* Demo E (NOT YET BUILT): a fixed staircase with a movable viewport frame —
+    box-center (still looks lopsided) vs centroid-center (fixed). Build it to
+    show what camera-recenter buys, so the rejection is honest. */}
 
 {/* <CompactionDemo strategy="camera" /> — TODO build the camera-recenter demo */}
 
+## The open problem: a packer that threads the needle
+
+Which leaves me here. The theorem says even shape, hole-free, and move-local
+can't all three hold at once, and camera-recenter — the fourth escape — is off
+the table. So a better packer has to give up **one** of the three, but in a
+*controlled* way, not the flailing way brick and √-wrap gave it up.
+
+What I'm poking at:
+
+- **Bounded holes.** Allow some interior gaps, but keep them small and
+  predictable. A hole that's always in the same place is furniture; a hole that
+  teleports is a bug. Brick failed because its holes moved.
+- **Bounded movement.** Cap the chips a single event can move and accept a
+  slightly worse shape, instead of √-wrap's unbounded cascade.
+- **A softer anchor.** A per-line rank rule that's less rigidly corner-locked but
+  still a pure function of (line, rank-in-line), so it stays local while spreading
+  the mass more evenly.
+
+No winner yet. What a winner has to satisfy: elongation near 1 (even-ish), low
+chips-moved (local), a *predictable direction* of movement, and no whole-row
+teleports. If you've solved something like this, I'd genuinely like to hear it.
+
+{/* TODO: drop in candidates as you try them — a new strategy in compaction.ts
+    plus a <CompactionDemo strategy="..." /> reads straight into the harness. */}
+
 ## How to evaluate this (the methodology)
 
-{/* TODO: rank strategies ON DATA before device testing — seeded replay from a
-    full grid, remove a random interior stack down to a floor, sample metrics.
-    The four metrics: countChipsMoved (locality — the #1 number), elongation
-    (lopsidedness), originEdgeLoad (the literal complaint), settle-jitter (hard
-    gate, must be 0). All live in ./demos/compaction.ts.
+One thing I'd do differently from the start: rank these on **data** before ever
+touching a phone. Every strategy here is a pure function on the board map, so the
+harness is just more pure functions — no UI required. Start from a full grid,
+repeatedly remove a random interior stack (a stand-in for a merge or completion),
+recompact, sample the metrics, down to a small floor.
 
-    Lessons about measurement itself:
-    1. Measure the representative event (mid-board removal), not the convenient
-       one (tail-append) — √-wrap passed the convenient test, failed on device.
-    2. Aggregates hide qualitative pain — brick's ~1.7× mean-moved undersells a
-       whole-row teleport.
-    3. Metrics have blind spots — elongation/origin-load never caught brick's
-       interior holes; only the phone (or a fill-density metric) did. */}
+Two details that matter more than they look. Use a **seeded PRNG** so runs
+reproduce across machines. And pick the removal victim by rank in a **sorted
+stack-id list**, so every strategy faces the *identical* removal stream — that
+isolates layout as the only variable.
 
-{/* TODO: paste the ranking table (moved / elongation / originLoad / jitter) once
-    the seeded replay is run. Numbers come from compaction.ts. */}
+Four metrics, all in [`./demos/compaction.ts`](https://github.com/cbuchert/christianbuchert.com):
+
+- **`countChipsMoved`** — the locality number, and the one I trust most. Count the
+  stacks present in both the before and after boards whose cell changed. (A
+  removed stack is the *event*, not a slide, so it doesn't count.)
+- **`elongation`** — lopsidedness. `(maxRowRun + maxColRun) / (2·⌈√n⌉)`. 1.0 is a
+  perfect square; higher is more staircase.
+- **`originEdgeLoad`** — the literal complaint. How much of the mass sits on
+  row 0 and column 0. 1.0 means both origin edges span the whole block.
+- **settle-jitter** — recompact an already-settled board and count what moved.
+  Must be **0.** This is the hard gate that disqualified the mirror.
+
+Run the seeded replay (grid side 6, 5 seeds, removals down to 2 stacks) and the
+trade falls right out — `moved` shown mean / p90 / max:
+
+| strategy | moved | elong (mean/max) | originLoad | jitter | verdict |
+|---|---|---|---|---|---|
+| baseline (corner) | 2.2 / 5 / 9 | 1.09 / 1.50 | 1.00 | 0 | local + hole-free, but lopsided — the status quo |
+| √-wrap | 9.7 / 22 / 34 | 0.95 / 1.00 | 1.00 | 0 | square, but cascades — not local |
+| brick | 3.8 / 9 / 17 | 0.95 / 1.25 | 0.81 | 0 | better shape on paper; islands + teleport on device |
+| mirror-down | 17.2 / 31 / 34 | 1.08 / 1.33 | 0.77 | **34** | disqualified — settle-jitter |
+| native-down | 2.7 / 5 / 14 | 1.08 / 1.38 | 0.78 | 0 | just the baseline mirrored — orientation only |
+
+And three things the exercise taught me about measuring itself:
+
+1. **Measure the representative event, not the convenient one.** The √-wrap
+   prototype passed a "just append at the tail" test and then died on device —
+   because tail-append is the *one* operation √-wrap is stable under, and real
+   play is mid-sequence removals, the worst case. A misleading test is worse than
+   no test.
+2. **Aggregates hide qualitative pain.** Brick's ~1.7× mean-moved sounds fine. A
+   whole-row teleport is not fine. The average ate the thing that actually
+   mattered — which is why the table above doesn't rank brick as a winner despite
+   its numbers.
+3. **Metrics have blind spots.** Elongation and origin-load never once caught
+   brick's interior holes — only the phone did. If you want to catch that on
+   paper, add a fill-density metric (occupied / bounding-box area).
 
 ## Thanks
 
